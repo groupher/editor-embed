@@ -26,7 +26,22 @@ module.exports = {
             }
           }
         ]
-      }
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader?removeSVGTagAttrs=false'
+      },
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 1024 * 15,
+            },
+          },
+        ],
+      },
     ]
   },
   output: {

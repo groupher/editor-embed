@@ -2,6 +2,17 @@ import SERVICES from './services';
 import './index.css';
 import {debounce} from 'debounce';
 
+import EmbedIcon from './icon/embed.svg';
+
+import ReplitIcon from './icon/replit.png'
+import CodepenIcon from './icon/codepen.png'
+import CodesandboxIcon from './icon/codesandbox.png'
+import JsfiddleIcon from './icon/jsfiddle.png'
+import BiliBiliIcon from './icon/bilibili.png'
+import YoutubeIcon from './icon/youtube.png'
+import GaodeIcon from './icon/gaode.png'
+import GfycatIcon from './icon/gfycat.gif'
+
 /**
  * @typedef {Object} EmbedData
  * @description Embed Tool data
@@ -50,6 +61,13 @@ export default class Embed {
     this.element = null;
 
     this.data = data;
+  }
+
+  static get toolbox() {
+    return {
+      icon: EmbedIcon,
+      title: 'Embed'
+    };
   }
 
   /**
@@ -110,8 +128,35 @@ export default class Embed {
       preloader: 'embed-tool__preloader',
       caption: 'embed-tool__caption',
       url: 'embed-tool__url',
-      content: 'embed-tool__content'
+      content: 'embed-tool__content',
+      // add
+      addrWrapper: 'embed-tool__addrwrapper',
+      addrInputWrapper: 'embed-tool__addrwrapper-inputwrapper',
+      addrInput: 'embed-tool__addrwrapper-inputwrapper-input',
+      addrDescWrapper: 'embed-tool__addrwrapper-descwrapper',
+      addrDesc: 'embed-tool__addrwrapper-descwrapper-desc',
+      addrIconWrapper: 'embed-tool__addrwrapper-descwrapper-iconwrapper',
+      addrIcon: 'embed-tool__addrwrapper-descwrapper-iconwrapper-icon',
     };
+  }
+
+  makeServiceIcon(name) {
+    const iconPool = {
+      'replit': ReplitIcon,
+      'jsfiddle': JsfiddleIcon,
+      'codesandbox': CodesandboxIcon,
+      'bilibili':  BiliBiliIcon,
+      'youtube': YoutubeIcon,
+      'codepen': CodepenIcon,
+      'gaode': GaodeIcon,
+      'gfycat': GfycatIcon
+    }
+
+    const Icon = this._make("img", this.CSS.addrIcon, {
+      src: iconPool[name]
+    })
+
+    return Icon
   }
 
   /**
@@ -121,10 +166,48 @@ export default class Embed {
    */
   render() {
     if (!this.data.service) {
-      const container = document.createElement('div');
+      const container = this._make('div', this.CSS.addrWrapper);
+      const addrInputWrapper = this._make('div', this.CSS.addrInputWrapper);
+      const addrInput = this._make('input', this.CSS.addrInput);
+
+      const addrDescWrapper = this._make('div', this.CSS.addrDescWrapper);
+      const addrDesc = this._make('div', this.CSS.addrDesc);
+
+      const addrIconWrapper = this._make("div", this.CSS.addrIconWrapper);
+      
+      const addrServiceIcon0 = this.makeServiceIcon('replit')
+      const addrServiceIcon1 = this.makeServiceIcon('codepen')
+      const addrServiceIcon2 = this.makeServiceIcon('codesandbox')
+      const addrServiceIcon3 = this.makeServiceIcon('jsfiddle')
+      const addrServiceIcon4 = this.makeServiceIcon('bilibili')
+      const addrServiceIcon5 = this.makeServiceIcon('youtube')
+      const addrServiceIcon6 = this.makeServiceIcon('gaode')
+      const addrServiceIcon7 = this.makeServiceIcon('gfycat')
+
+      addrInput.placeholder = "请输入网页地址"
+      addrInputWrapper.appendChild(addrInput);
+
+      addrDesc.innerHTML = "仅支持嵌入以下站点的内容: "
+      addrDescWrapper.appendChild(addrDesc);
+
+      addrIconWrapper.appendChild(addrServiceIcon0);
+      addrIconWrapper.appendChild(addrServiceIcon1);
+      addrIconWrapper.appendChild(addrServiceIcon2);
+      addrIconWrapper.appendChild(addrServiceIcon3);
+      addrIconWrapper.appendChild(addrServiceIcon4);
+      addrIconWrapper.appendChild(addrServiceIcon5);
+      addrIconWrapper.appendChild(addrServiceIcon6);
+      addrIconWrapper.appendChild(addrServiceIcon7);
+
+      addrDescWrapper.appendChild(addrIconWrapper);
+
+      container.appendChild(addrInputWrapper);
+      container.appendChild(addrDescWrapper);
+      // const container = document.createElement('div');
 
       this.element = container;
 
+      console.log("container 1: ", container);
       return container;
     }
 
@@ -158,6 +241,7 @@ export default class Embed {
       });
 
     this.element = container;
+    console.log("container 2: ", container);
 
     return container;
   }
@@ -316,5 +400,28 @@ export default class Embed {
     }).then(() => {
       observer.disconnect();
     });
+  }
+
+  /**
+   * Helper method for elements creation
+   * @param tagName
+   * @param classNames
+   * @param attributes
+   * @return {HTMLElement}
+   */
+  _make(tagName, classNames = null, attributes = {}) {
+    const el = document.createElement(tagName);
+
+    if (Array.isArray(classNames)) {
+      el.classList.add(...classNames);
+    } else if (classNames) {
+      el.classList.add(classNames);
+    }
+
+    for (const attrName in attributes) {
+      el[attrName] = attributes[attrName];
+    }
+
+    return el;
   }
 }

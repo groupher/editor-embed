@@ -37,7 +37,11 @@
     "postcss-nested": "^4.1.1",
     "postcss-nested-ancestors": "^2.0.0",
     "style-loader": "^0.21.0",
+    "url-loader": "^2.1.0",
     "webpack": "^4.16.3",
     "webpack-cli": "^3.2.3"
+  },
+  "dependencies": {
+    "svg-inline-loader": "^0.8.0"
   }
 }
