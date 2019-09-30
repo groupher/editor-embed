@@ -80,11 +80,13 @@
     border: 1px solid;
     border-color: #e4e4e4;
     width: 100%;
-    height: 100px;
+    height: 120px;
     border-radius: 10px;
+
     &-inputwrapper {
       height: 40px;
       padding: 10px;
+      padding-top: 14px;
       padding-bottom: 0;
 
       &-input {
@@ -121,16 +123,25 @@
       &-desc {
         color: #9c9c9c;
         font-size: 12px;
+        margin-top: 5px;
       }
       &-iconwrapper {
         display: flex;
         justify-content: center;
-        margin-top: 5px;
+        margin-top: 10px;
         
         &-icon {
           margin-right: 6px;
           width: 19px;
           height: 19px;
+          opacity: 0.8;
+
+          &:hover {
+            opacity: 1;
+            cursor: pointer;
+          }
+
+          transition: all .3s;
         }
       }
     }

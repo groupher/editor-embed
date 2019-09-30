@@ -1,4 +1,5 @@
 import SERVICES from './services';
+import SERVICES2 from './services2';
 import './index.css';
 import {debounce} from 'debounce';
 
@@ -140,23 +141,24 @@ export default class Embed {
     };
   }
 
-  makeServiceIcon(name) {
-    const iconPool = {
-      'replit': ReplitIcon,
-      'jsfiddle': JsfiddleIcon,
-      'codesandbox': CodesandboxIcon,
-      'bilibili':  BiliBiliIcon,
-      'youtube': YoutubeIcon,
-      'codepen': CodepenIcon,
-      'gaode': GaodeIcon,
-      'gfycat': GfycatIcon
-    }
-
-    const Icon = this._make("img", this.CSS.addrIcon, {
-      src: iconPool[name]
+  /**
+   * Render valid service icon list
+   *
+   * @return {HTMLElement}
+   */
+  makeServiceIconList() {
+    const serviceKeys = Object.keys(SERVICES2)
+    const addrIconWrapper = this._make("div", this.CSS.addrIconWrapper);
+  
+    serviceKeys.forEach(key => {
+      const Icon= this._make("img", this.CSS.addrIcon, {
+        src: SERVICES2[key].icon
+      })
+    
+      addrIconWrapper.appendChild(Icon)
     })
-
-    return Icon
+  
+    return addrIconWrapper
   }
 
   /**
@@ -173,16 +175,7 @@ export default class Embed {
       const addrDescWrapper = this._make('div', this.CSS.addrDescWrapper);
       const addrDesc = this._make('div', this.CSS.addrDesc);
 
-      const addrIconWrapper = this._make("div", this.CSS.addrIconWrapper);
-      
-      const addrServiceIcon0 = this.makeServiceIcon('replit')
-      const addrServiceIcon1 = this.makeServiceIcon('codepen')
-      const addrServiceIcon2 = this.makeServiceIcon('codesandbox')
-      const addrServiceIcon3 = this.makeServiceIcon('jsfiddle')
-      const addrServiceIcon4 = this.makeServiceIcon('bilibili')
-      const addrServiceIcon5 = this.makeServiceIcon('youtube')
-      const addrServiceIcon6 = this.makeServiceIcon('gaode')
-      const addrServiceIcon7 = this.makeServiceIcon('gfycat')
+      const addrIconList = this.makeServiceIconList()
 
       addrInput.placeholder = "请输入网页地址"
       addrInputWrapper.appendChild(addrInput);
@@ -190,16 +183,7 @@ export default class Embed {
       addrDesc.innerHTML = "仅支持嵌入以下站点的内容: "
       addrDescWrapper.appendChild(addrDesc);
 
-      addrIconWrapper.appendChild(addrServiceIcon0);
-      addrIconWrapper.appendChild(addrServiceIcon1);
-      addrIconWrapper.appendChild(addrServiceIcon2);
-      addrIconWrapper.appendChild(addrServiceIcon3);
-      addrIconWrapper.appendChild(addrServiceIcon4);
-      addrIconWrapper.appendChild(addrServiceIcon5);
-      addrIconWrapper.appendChild(addrServiceIcon6);
-      addrIconWrapper.appendChild(addrServiceIcon7);
-
-      addrDescWrapper.appendChild(addrIconWrapper);
+      addrDescWrapper.appendChild(addrIconList );
 
       container.appendChild(addrInputWrapper);
       container.appendChild(addrDescWrapper);
