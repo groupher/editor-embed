@@ -21,59 +21,132 @@ import ZhihuIcon from './icon/zhihu.png'
 
 export default {
   github: {
-    icon: GithubIcon
+    icon: GithubIcon,
+    title: "github",
+    link: "https://github.com",
+    desc: "支持嵌入 issue 等",
+    demoEmbedLink: "https://github.com"
   }, 
   replit: {
-    icon: ReplitIcon
+    icon: ReplitIcon,
+    title: "replit",
+    link: "https://github.com",
+    desc: "支持嵌入 issue 等",
+    demoEmbedLink: "https://github.com"
   }, 
   codepen: {
-    icon: CodepenIcon
+    icon: CodepenIcon,
+    title: "codepen",
+    link: "https://github.com",
+    desc: "支持嵌入 issue 等",
+    demoEmbedLink: "https://github.com"
   }, 
   codesandbox: {
-    icon: CodesandboxIcon
+    icon: CodesandboxIcon,
+    title: "codesandbox",
+    link: "https://github.com",
+    desc: "支持嵌入 issue 等",
+    demoEmbedLink: "https://github.com"
   },
   jsfiddle: { 
     icon: JsfiddleIcon,
+    title: "jsfiddle",
+    link: "https://github.com",
+    desc: "支持嵌入 issue 等",
+    demoEmbedLink: "https://github.com"
   },
 
   zhihu: { 
-    icon: ZhihuIcon ,
+    icon: ZhihuIcon,
+    title: "知乎",
+    link: "https://zhihu.com",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
   v2ex: { 
     icon: V2exIcon,
+    title: "v站 (v2ex)",
+    link: "https://v2ex.com",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
   techcrunch: { 
     icon: TechcrunchIcon,
+    title: "techcrunch (中文站)",
+    link: "https://v2ex.com",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
   juejin: { 
     icon: JuejinIcon,
+    title: "掘金",
+    link: "https://juejin.im",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
   infoq: { 
     icon: InfoQIcon,
+    title: "InfoQ (中国)",
+    link: "https://juejin.im",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
   ifanr: { 
     icon: IfanrIcon,
+    title: "ifanr",
+    link: "https://juejin.im",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
   shaoshupai: { 
     icon: ShaoshupaiIcon,
+    title: "少数派",
+    link: "https://juejin.im",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
 
   dribble: {
     icon: DribbleIcon,
+    title: "dribble",
+    link: "https://juejin.im",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
   producthunt: {
-    icon: ProducthuntIcon 
+    icon: ProducthuntIcon,
+    title: "producthunt",
+    link: "https://juejin.im",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
   bilibili: {
     icon: BiliBiliIcon,
+    title: "b站（bilibili）",
+    link: "https://juejin.im",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
   youtube: {
-    icon: YoutubeIcon
+    icon: YoutubeIcon,
+    title: "youtube",
+    link: "https:/youtube.com",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
+
   gaode: {
     icon: GaodeIcon,
+    title: "高德地图",
+    link: "https:/youtube.com",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   },
   gfycat: {
-    icon: GfycatIcon
+    icon: GfycatIcon,
+    title: "gfycat（gif图）",
+    link: "https:/youtube.com",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://github.com"
   }
 }

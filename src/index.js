@@ -1,7 +1,13 @@
+import { debounce } from 'debounce';
+import tippy from 'tippy.js'
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
+
 import SERVICES from './services';
 import PROVIDERS from './providers';
 import './index.css';
-import {debounce} from 'debounce';
+
+// import { loadJS } from './utils';
 
 import EmbedIcon from './icon/embed.svg';
 
@@ -54,6 +60,10 @@ export default class Embed {
 
     this.data = data;
   }
+
+  // initTooltip() {
+  //   console.log("initTooltip: ", tippy)
+  // }
 
   static get toolbox() {
     return {
@@ -129,7 +139,17 @@ export default class Embed {
       addrDesc: 'embed-tool__addrwrapper-descwrapper-desc',
       addrIconWrapper: 'embed-tool__addrwrapper-descwrapper-iconwrapper',
       addrIcon: 'embed-tool__addrwrapper-descwrapper-iconwrapper-icon',
-      addrIconDivider: 'embed-tool__addrwrapper-descwrapper-iconwrapper-divider'
+      addrIconDivider: 'embed-tool__addrwrapper-descwrapper-iconwrapper-divider',
+
+      providerCard: 'provider-wrapper',
+      providerCardHeader: 'provider-wrapper-header',
+      providerCardCover: 'provider-wrapper-header__cover',
+      providerCardIntro: 'provider-wrapper-header__intro',
+      providerCardIntroTitle: 'provider-wrapper-header__intro__title',
+      providerCardIntroLink: 'provider-wrapper-header__intro__link',
+      providerCardDesc: 'provider-wrapper__desc',
+      providerCardFooter: 'provider-wrapper__footer',
+      providerCardFooterBtn: 'provider-wrapper__footer_btn',
     };
   }
 
@@ -147,7 +167,10 @@ export default class Embed {
         src: PROVIDERS[key].icon
       })
 
+      tippy(Icon, this.makeProviderCard(PROVIDERS[key]))
+
       addrIconWrapper.appendChild(Icon)
+
       if(key === 'jsfiddle' || 
          key === 'shaoshupai' || 
          key === 'producthunt' || 
@@ -162,70 +185,95 @@ export default class Embed {
   }
 
   /**
+   * return tippy config
+   * @param {HTMLElement}
+   * @return {object}
+   */
+  makeProviderCard(provider) {
+    const Wrapper = this._make("div", this.CSS.providerCard)
+    const Header = this._make("div", this.CSS.providerCardHeader)
+    const Cover = this._make("img", this.CSS. providerCardCover, {
+      src: provider.icon
+    })
+    const Intro = this._make("div", this.CSS.providerCardIntro)
+    const Title = this._make("div", this.CSS.providerCardIntroTitle)
+    const Link = this._make("a", this.CSS.providerCardIntroLink)
+
+    const Desc = this._make("div", this.CSS.providerCardDesc)
+    const Footer = this._make("div", this.CSS.providerCardFooter)
+    const InsertBtn = this._make("div", this.CSS.providerCardFooterBtn)
+
+    Title.innerText = provider.title
+    Link.innerText = provider.link
+
+    Desc.innerText = provider.desc
+    InsertBtn.innerText = "插入示例"
+    
+    Intro.appendChild(Title)
+    Intro.appendChild(Link)
+
+    Header.appendChild(Cover)
+    Header.appendChild(Intro)
+
+    Footer.appendChild(InsertBtn)
+
+    Wrapper.appendChild(Header)
+    Wrapper.appendChild(Desc)
+    Wrapper.appendChild(Footer)
+
+    // Wrapper.innerText = provider.title
+
+    const content = Wrapper
+
+    return {
+      content,
+      theme: 'light',
+      delay: 200,
+      // trigger: "hover",
+      placement: 'bottom',
+      // allowing you to hover over and click inside them.
+      interactive: true,
+    }
+  }
+
+  /**
    * Render Embed tool content
    *
    * @return {HTMLElement}
    */
   render() {
-    if (!this.data.service) {
-      const container = this._make('div', this.CSS.addrWrapper);
-      const addrInputWrapper = this._make('div', this.CSS.addrInputWrapper);
-      const addrInput = this._make('input', this.CSS.addrInput);
+    const container = this._make('div', this.CSS.addrWrapper);
+    const addrInputWrapper = this._make('div', this.CSS.addrInputWrapper);
+    const addrInput = this._make('input', this.CSS.addrInput);
 
-      const addrDescWrapper = this._make('div', this.CSS.addrDescWrapper);
-      const addrDesc = this._make('div', this.CSS.addrDesc);
+    const addrDescWrapper = this._make('div', this.CSS.addrDescWrapper);
+    const addrDesc = this._make('div', this.CSS.addrDesc);
 
-      const addrIconList = this.makeServiceIconList()
+    const addrIconList = this.makeServiceIconList()
 
-      addrInput.placeholder = "请输入网页地址"
-      addrInputWrapper.appendChild(addrInput);
+    addrInput.placeholder = "请输入网页地址"
+    addrInputWrapper.appendChild(addrInput);
 
-      addrDesc.innerHTML = "仅支持嵌入以下站点的内容: "
-      addrDescWrapper.appendChild(addrDesc);
+    addrDesc.innerHTML = "仅支持嵌入以下站点的内容或服务: "
+    addrDescWrapper.appendChild(addrDesc);
 
-      addrDescWrapper.appendChild(addrIconList );
+    addrDescWrapper.appendChild(addrIconList );
 
-      container.appendChild(addrInputWrapper);
-      container.appendChild(addrDescWrapper);
-      // const container = document.createElement('div');
-
-      this.element = container;
-
-      console.log("container 1: ", container);
-      return container;
-    }
-
-    const {html} = Embed.services[this.data.service];
-    const container = document.createElement('div');
-    const caption = document.createElement('div');
-    const template = document.createElement('template');
-    const preloader = this.createPreloader();
-
-    container.classList.add(this.CSS.baseClass, this.CSS.container, this.CSS.containerLoading);
-    caption.classList.add(this.CSS.input, this.CSS.caption);
-
-    container.appendChild(preloader);
-
-    caption.contentEditable = true;
-    caption.dataset.placeholder = 'Enter a caption';
-    caption.innerHTML = this.data.caption || '';
-
-    template.innerHTML = html;
-    template.content.firstChild.setAttribute('src', this.data.embed);
-    template.content.firstChild.classList.add(this.CSS.content);
-
-    const embedIsReady = this.embedIsReady(container);
-
-    container.appendChild(template.content.firstChild);
-    container.appendChild(caption);
-
-    embedIsReady
-      .then(() => {
-        container.classList.remove(this.CSS.containerLoading);
-      });
+    container.appendChild(addrInputWrapper);
+    container.appendChild(addrDescWrapper);
+    // const container = document.createElement('div');
 
     this.element = container;
-    console.log("container 2: ", container);
+
+    console.log("container 1: ", container);
+    return container;
+
+    // const embedIsReady = this.embedIsReady(container);
+
+    // embedIsReady
+    //   .then(() => {
+    //     container.classList.remove(this.CSS.containerLoading);
+    //   });
 
     return container;
   }
