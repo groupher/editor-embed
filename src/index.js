@@ -1,18 +1,9 @@
 import SERVICES from './services';
-import SERVICES2 from './services2';
+import PROVIDERS from './providers';
 import './index.css';
 import {debounce} from 'debounce';
 
 import EmbedIcon from './icon/embed.svg';
-
-import ReplitIcon from './icon/replit.png'
-import CodepenIcon from './icon/codepen.png'
-import CodesandboxIcon from './icon/codesandbox.png'
-import JsfiddleIcon from './icon/jsfiddle.png'
-import BiliBiliIcon from './icon/bilibili.png'
-import YoutubeIcon from './icon/youtube.png'
-import GaodeIcon from './icon/gaode.png'
-import GfycatIcon from './icon/gfycat.gif'
 
 /**
  * @typedef {Object} EmbedData
@@ -138,6 +129,7 @@ export default class Embed {
       addrDesc: 'embed-tool__addrwrapper-descwrapper-desc',
       addrIconWrapper: 'embed-tool__addrwrapper-descwrapper-iconwrapper',
       addrIcon: 'embed-tool__addrwrapper-descwrapper-iconwrapper-icon',
+      addrIconDivider: 'embed-tool__addrwrapper-descwrapper-iconwrapper-divider'
     };
   }
 
@@ -147,15 +139,23 @@ export default class Embed {
    * @return {HTMLElement}
    */
   makeServiceIconList() {
-    const serviceKeys = Object.keys(SERVICES2)
+    const serviceKeys = Object.keys(PROVIDERS)
     const addrIconWrapper = this._make("div", this.CSS.addrIconWrapper);
   
     serviceKeys.forEach(key => {
       const Icon= this._make("img", this.CSS.addrIcon, {
-        src: SERVICES2[key].icon
+        src: PROVIDERS[key].icon
       })
-    
+
       addrIconWrapper.appendChild(Icon)
+      if(key === 'jsfiddle' || 
+         key === 'shaoshupai' || 
+         key === 'producthunt' || 
+         key === 'youtube') {
+        const Divider= this._make("div", this.CSS.addrIconDivider)
+        Divider.innerText = '/'
+        addrIconWrapper.appendChild(Divider)
+      }
     })
   
     return addrIconWrapper
