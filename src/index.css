@@ -168,7 +168,11 @@
       &__link {
         color: #949494;
         font-size: 14px;
+        max-width: 120px;
         font-style: italic;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
