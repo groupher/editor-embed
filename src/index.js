@@ -1,15 +1,21 @@
 import { debounce } from 'debounce';
-import tippy from 'tippy.js'
+import tippy, { hideAll } from 'tippy.js'
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 
 import SERVICES from './services';
 import PROVIDERS from './providers';
+import { parseDomain, loadJS } from './utils'
+
 import './index.css';
 
 // import { loadJS } from './utils';
 
 import EmbedIcon from './icon/embed.svg';
+
+const tooltipHideAll = hideAll
+
+const embedlyScript = "https://cdn.embedly.com/widgets/platform.js"
 
 /**
  * @typedef {Object} EmbedData
@@ -59,11 +65,15 @@ export default class Embed {
     this.element = null;
 
     this.data = data;
+    this.addrInput = null
+
+    loadJS(embedlyScript, this.initEmbedly.bind(this), document.body);
   }
 
-  // initTooltip() {
-  //   console.log("initTooltip: ", tippy)
-  // }
+  initEmbedly() {
+    console.log("embedly: ", embedly)
+    // <a href="http://embed.ly" class="embedly-card">Embedly</a>
+  }
 
   static get toolbox() {
     return {
@@ -135,6 +145,7 @@ export default class Embed {
       addrWrapper: 'embed-tool__addrwrapper',
       addrInputWrapper: 'embed-tool__addrwrapper-inputwrapper',
       addrInput: 'embed-tool__addrwrapper-inputwrapper-input',
+      addrInputBtn: 'embed-tool__addrwrapper-inputwrapper-btn',
       addrDescWrapper: 'embed-tool__addrwrapper-descwrapper',
       addrDesc: 'embed-tool__addrwrapper-descwrapper-desc',
       addrIconWrapper: 'embed-tool__addrwrapper-descwrapper-iconwrapper',
@@ -159,12 +170,12 @@ export default class Embed {
    * @return {HTMLElement}
    */
   makeServiceIconList() {
-    const serviceKeys = Object.keys(PROVIDERS)
+    const providerKeys = Object.keys(PROVIDERS)
     const addrIconWrapper = this._make("div", this.CSS.addrIconWrapper);
   
-    serviceKeys.forEach(key => {
-      const Icon= this._make("img", this.CSS.addrIcon, {
-        src: PROVIDERS[key].icon
+    providerKeys.forEach(key => {
+      const Icon= this._make("img", [this.CSS.addrIcon, 'icon-' + key], {
+        src: PROVIDERS[key].icon,
       })
 
       tippy(Icon, this.makeProviderCard(PROVIDERS[key]))
@@ -192,7 +203,7 @@ export default class Embed {
   makeProviderCard(provider) {
     const Wrapper = this._make("div", this.CSS.providerCard)
     const Header = this._make("div", this.CSS.providerCardHeader)
-    const Cover = this._make("img", this.CSS. providerCardCover, {
+    const Cover = this._make("img", this.CSS.providerCardCover, {
       src: provider.icon
     })
     const Intro = this._make("div", this.CSS.providerCardIntro)
@@ -208,6 +219,14 @@ export default class Embed {
 
     Desc.innerText = provider.desc
     InsertBtn.innerText = "插入示例"
+
+    InsertBtn.addEventListener('click', () => {
+      console.log("clicked: ", provider.demoEmbedLink)
+      this.addrInput.value = provider.demoEmbedLink
+      this.addrInputHandler()
+      this.addrInput.focus()
+      tooltipHideAll()
+    })
     
     Intro.appendChild(Title)
     Intro.appendChild(Link)
@@ -237,43 +256,138 @@ export default class Embed {
   }
 
   /**
+   * show confirm btn when input addr is supported
+   *
+   */
+  showConfirmBtn() {
+    this.addrInput.style.width = 'calc(100% - 80px)'
+    setTimeout(() => {
+      this.addrInputBtn.style.display = "inline-block"
+    }, 500)
+  }
+
+  /**
+   * hide confirm btn when input addr is unsupported
+   *
+   */
+  hideConfirmBtn() {
+    this.addrInputBtn.style.display = "none"
+    setTimeout(() => {
+      this.addrInput.style.width = '100%'
+    }, 500)
+  }
+
+  /**
+   * handle addr input change
+   * 
+   * highlight icon which the icon
+   */
+  addrInputHandler() {
+    const { value } = this.addrInput 
+    const providerKeys = Object.keys(PROVIDERS)
+    const domain = parseDomain(value)
+
+    if(value.trim() === "") {
+      this.hideConfirmBtn()
+      for(let i = 0; i < providerKeys.length; i++ ) {
+        const curKey = providerKeys[i]
+        const curIcon = document.querySelector('.icon-' + curKey)
+        curIcon.style.opacity = 1
+        curIcon.style.filter = "grayscale(0)"
+      }
+      return false
+    }
+
+    console.log('parseDomain:  ', domain)
+
+    // if is unsupported domain, just hide the confirmbtn
+    if(providerKeys.indexOf(domain) > -1) {
+      this.showConfirmBtn()
+    } else {
+      this.hideConfirmBtn()
+    }
+
+    // highlight the current domain for current provider
+    for(let i = 0; i < providerKeys.length; i++ ) {
+      const curKey = providerKeys[i]
+      const curIcon = document.querySelector('.icon-' + curKey)
+
+      if (domain === curKey) {
+        curIcon.style.opacity = 1
+        curIcon.style.filter = "grayscale(0)"
+      } else {
+        curIcon.style.opacity = 0.5
+        curIcon.style.filter = "grayscale(1)"
+      }
+    }
+  }
+
+  addrInputConfirmHandler() {
+    const { value } = this.addrInput 
+    const container = document.querySelector('.' + this.CSS.container)
+    console.log('addrInputConfirmHandler: ', value)
+    const embedHTML = this._make('a', 'embedly-card', {
+      href: value,
+      "data-card-controls": 0
+    })
+
+    // embedHTML.dataset["card-controls"] = 0
+    embedHTML.setAttribute("data-card-controls", "0")
+    container.appendChild(embedHTML);
+
+    console.log('loading')
+    this.containerLoading.style.display = "block"
+    embedly('on', 'card.rendered', (iframe) => {
+      // iframe is the card iframe that we used to render the event.
+      console.log('loading done')
+      this.containerLoading.style.display = "none"
+      this.adder.style.display = 'none'
+    });
+
+
+    // <a href="http://embed.ly" class="embedly-card">Embedly</a>
+  }
+
+  /**
    * Render Embed tool content
    *
    * @return {HTMLElement}
    */
   render() {
-    const container = this._make('div', this.CSS.addrWrapper);
+    const container = this._make('div', this.CSS.container);
+    this.adder = this._make('div', this.CSS.addrWrapper);
     const addrInputWrapper = this._make('div', this.CSS.addrInputWrapper);
-    const addrInput = this._make('input', this.CSS.addrInput);
+    this.addrInput = this._make('input', this.CSS.addrInput);
+    this.addrInputBtn = this._make('button', this.CSS.addrInputBtn);
+    this.addrInputBtn.addEventListener('click', debounce(this.addrInputConfirmHandler.bind(this), 300))
+    this.containerLoading = this._make('div', this.CSS.containerLoading);
 
     const addrDescWrapper = this._make('div', this.CSS.addrDescWrapper);
     const addrDesc = this._make('div', this.CSS.addrDesc);
 
     const addrIconList = this.makeServiceIconList()
 
-    addrInput.placeholder = "请输入网页地址"
-    addrInputWrapper.appendChild(addrInput);
+    this.addrInput.placeholder = "请输入网页地址"
+    this.addrInput.addEventListener('input', debounce(this.addrInputHandler.bind(this), 300))
+
+    this.addrInputBtn.innerText = "确定"
+
+    addrInputWrapper.appendChild(this.addrInput);
+    addrInputWrapper.appendChild(this.addrInputBtn);
 
     addrDesc.innerHTML = "仅支持嵌入以下站点的内容或服务: "
     addrDescWrapper.appendChild(addrDesc);
 
-    addrDescWrapper.appendChild(addrIconList );
+    addrDescWrapper.appendChild(addrIconList);
 
-    container.appendChild(addrInputWrapper);
-    container.appendChild(addrDescWrapper);
+    this.adder.appendChild(addrInputWrapper);
+    this.adder.appendChild(addrDescWrapper);
+
+    container.appendChild(this.adder);
+    container.appendChild(this.containerLoading);
     // const container = document.createElement('div');
 
     this.element = container;
-
-    console.log("container 1: ", container);
-    return container;
-
-    // const embedIsReady = this.embedIsReady(container);
-
-    // embedIsReady
-    //   .then(() => {
-    //     container.classList.remove(this.CSS.containerLoading);
-    //   });
 
     return container;
   }
@@ -306,132 +420,12 @@ export default class Embed {
   }
 
   /**
-   * Handle pasted url and return Service object
-   *
-   * @param {PasteEvent} event- event with pasted data
-   * @return {Service}
-   */
-  onPaste(event) {
-    const {key: service, data: url} = event.detail;
-
-    const {regex, embedUrl, width, height, id = (ids) => ids.shift()} = Embed.services[service];
-    const result = regex.exec(url).slice(1);
-    const embed = embedUrl.replace(/<\%\= remote\_id \%\>/g, id(result));
-
-    this.data = {
-      service,
-      source: url,
-      embed,
-      width,
-      height
-    };
-  }
-
-  /**
-   * Analyze provided config and make object with services to use
-   *
-   * @param {EmbedConfig} config
-   */
-  static prepare({config = {}}) {
-    let {services = {}} = config;
-
-    let entries = Object.entries(SERVICES);
-
-    const enabledServices = Object
-      .entries(services)
-      .filter(([key, value]) => {
-        return typeof value === 'boolean' && value === true;
-      })
-      .map(([ key ]) => key);
-
-    const userServices = Object
-      .entries(services)
-      .filter(([key, value]) => {
-        return typeof value === 'object';
-      })
-      .filter(([key, service]) => Embed.checkServiceConfig(service))
-      .map(([key, service]) => {
-        const {regex, embedUrl, html, height, width, id} = service;
-
-        return [key, {
-          regex,
-          embedUrl,
-          html,
-          height,
-          width,
-          id
-        } ];
-      });
-
-    if (enabledServices.length) {
-      entries = entries.filter(([ key ]) => enabledServices.includes(key));
-    }
-
-    entries = entries.concat(userServices);
-
-    Embed.services = entries.reduce((result, [key, service]) => {
-      if (!(key in result)) {
-        result[key] = service;
-        return result;
-      }
-
-      result[key] = Object.assign({}, result[key], service);
-      return result;
-    }, {});
-
-    Embed.patterns = entries
-      .reduce((result, [key, item]) => {
-        result[key] = item.regex;
-
-        return result;
-      }, {});
-  }
-
-  /**
-   * Check if Service config is valid
-   *
-   * @param {Service} config
-   * @return {boolean}
-   */
-  static checkServiceConfig(config) {
-    const {regex, embedUrl, html, height, width, id} = config;
-
-    let isValid = regex && regex instanceof RegExp
-      && embedUrl && typeof embedUrl === 'string'
-      && html && typeof html === 'string';
-
-    isValid = isValid && (id !== undefined ? id instanceof Function : true);
-    isValid = isValid && (height !== undefined ? Number.isFinite(height) : true);
-    isValid = isValid && (width !== undefined ? Number.isFinite(width) : true);
-
-    return isValid;
-  }
-
-  /**
    * Paste configuration to enable pasted URLs processing by Editor
    */
   static get pasteConfig() {
     return {
       patterns: Embed.patterns
     };
-  }
-
-  /**
-   * Checks that mutations in DOM have finished after appending iframe content
-   * @param {HTMLElement} targetNode - HTML-element mutations of which to listen
-   * @return {Promise<any>} - result that all mutations have finished
-   */
-  embedIsReady(targetNode) {
-    const PRELOADER_DELAY = 450;
-
-    let observer = null;
-
-    return new Promise((resolve, reject) => {
-      observer = new MutationObserver(debounce(resolve, PRELOADER_DELAY));
-      observer.observe(targetNode, {childList: true, subtree: true});
-    }).then(() => {
-      observer.disconnect();
-    });
   }
 
   /**
