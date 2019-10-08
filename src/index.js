@@ -78,7 +78,7 @@ export default class Embed {
   static get toolbox() {
     return {
       icon: EmbedIcon,
-      title: 'Embed'
+      title: '嵌入 (Embed)'
     };
   }
 
