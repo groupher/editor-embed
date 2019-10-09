@@ -221,7 +221,6 @@ export default class Embed {
     InsertBtn.innerText = "插入示例"
 
     InsertBtn.addEventListener('click', () => {
-      console.log("clicked: ", provider.demoEmbedLink)
       this.addrInput.value = provider.demoEmbedLink
       this.addrInputHandler()
       this.addrInput.focus()
@@ -248,7 +247,7 @@ export default class Embed {
       content,
       theme: 'light',
       delay: 200,
-      trigger: "click",
+      // trigger: "click",
       placement: 'bottom',
       // allowing you to hover over and click inside them.
       interactive: true,
