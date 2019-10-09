@@ -78,7 +78,7 @@ export default class Embed {
   static get toolbox() {
     return {
       icon: EmbedIcon,
-      title: '嵌入 (Embed)'
+      title: '嵌入'
     };
   }
 
@@ -248,7 +248,7 @@ export default class Embed {
       content,
       theme: 'light',
       delay: 200,
-      // trigger: "click",
+      trigger: "click",
       placement: 'bottom',
       // allowing you to hover over and click inside them.
       interactive: true,
