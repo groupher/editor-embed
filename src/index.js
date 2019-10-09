@@ -71,7 +71,7 @@ export default class Embed {
   }
 
   initEmbedly() {
-    console.log("embedly: ", embedly)
+    // console.log("embedly: ", embedly)
     // <a href="http://embed.ly" class="embedly-card">Embedly</a>
   }
 
