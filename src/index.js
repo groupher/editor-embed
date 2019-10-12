@@ -71,14 +71,14 @@ export default class Embed {
   }
 
   initEmbedly() {
-    console.log("embedly: ", embedly)
+    // console.log("embedly: ", embedly)
     // <a href="http://embed.ly" class="embedly-card">Embedly</a>
   }
 
   static get toolbox() {
     return {
       icon: EmbedIcon,
-      title: '嵌入 (Embed)'
+      title: '嵌入'
     };
   }
 
@@ -248,7 +248,6 @@ export default class Embed {
     InsertBtn.innerText = "插入示例"
 
     InsertBtn.addEventListener('click', () => {
-      console.log("clicked: ", provider.demoEmbedLink)
       this.addrInput.value = provider.demoEmbedLink
       this.addrInputHandler()
       this.addrInput.focus()
