@@ -147,7 +147,9 @@ export default class Embed {
       addrInput: 'embed-tool__addrwrapper-inputwrapper-input',
       addrInputBtn: 'embed-tool__addrwrapper-inputwrapper-btn',
       addrDescWrapper: 'embed-tool__addrwrapper-descwrapper',
+      addrDescHeader: 'embed-tool__addrwrapper-descwrapper-header',
       addrDesc: 'embed-tool__addrwrapper-descwrapper-desc',
+      addrToggler: 'embed-tool__addrwrapper-descwrapper-toggler',
       addrIconWrapper: 'embed-tool__addrwrapper-descwrapper-iconwrapper',
       addrIcon: 'embed-tool__addrwrapper-descwrapper-iconwrapper-icon',
       addrIconDivider: 'embed-tool__addrwrapper-descwrapper-iconwrapper-divider',
@@ -170,6 +172,31 @@ export default class Embed {
    * @return {HTMLElement}
    */
   makeServiceIconList() {
+    const addrIconWrapper = this._make("div", this.CSS.addrIconWrapper);
+  
+    PROVIDERS.forEach(provider => {
+      const Icon= this._make("img", [this.CSS.addrIcon, 'icon-' + provider.domain], {
+        src: provider.icon,
+      })
+
+      tippy(Icon, this.makeProviderCard(provider))
+
+      addrIconWrapper.appendChild(Icon)
+
+      if(provider.domain === 'jsfiddle' || 
+         provider.domain === 'shaoshupai' || 
+         provider.domain === 'producthunt' || 
+         provider.domain === 'youtube') {
+        const Divider= this._make("div", this.CSS.addrIconDivider)
+        Divider.innerText = '/'
+        addrIconWrapper.appendChild(Divider)
+      }
+    })
+  
+    return addrIconWrapper
+  }
+
+  makeServiceIconList2() {
     const providerKeys = Object.keys(PROVIDERS)
     const addrIconWrapper = this._make("div", this.CSS.addrIconWrapper);
   
@@ -363,7 +390,9 @@ export default class Embed {
     this.containerLoading = this._make('div', this.CSS.containerLoading);
 
     const addrDescWrapper = this._make('div', this.CSS.addrDescWrapper);
+    const addrDescHeader= this._make('div', this.CSS.addrDescHeader);
     const addrDesc = this._make('div', this.CSS.addrDesc);
+    const addrToggler = this._make('div', this.CSS.addrToggler);
 
     const addrIconList = this.makeServiceIconList()
 
@@ -375,9 +404,12 @@ export default class Embed {
     addrInputWrapper.appendChild(this.addrInput);
     addrInputWrapper.appendChild(this.addrInputBtn);
 
-    addrDesc.innerHTML = "仅支持嵌入以下站点的内容或服务: "
-    addrDescWrapper.appendChild(addrDesc);
+    addrDesc.innerText = "仅支持嵌入以下站点的内容或服务: "
+    addrToggler.innerText = "展开全部"
+    addrDescHeader.appendChild(addrDesc);
+    addrDescHeader.appendChild(addrToggler);
 
+    addrDescWrapper.appendChild(addrDescHeader);
     addrDescWrapper.appendChild(addrIconList);
 
     this.adder.appendChild(addrInputWrapper);

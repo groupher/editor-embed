@@ -98,10 +98,27 @@
       padding: 0 15px;
       margin-top: 3px;
       height: 50px;
+      &-header {
+        display: flex;
+        margin-top: 5px;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+      }
       &-desc {
         color: #9c9c9c;
         font-size: 12px;
-        margin-top: 5px;
+      }
+      &-toggler {
+        color: #9c9c9c;
+        font-size: 12px;
+        &:hover {
+          cursor: pointer;
+          color: #5cb3f3;
+          font-weight: bold;
+        }
+
+        transition: all .3s;
       }
       &-iconwrapper {
         display: flex;
