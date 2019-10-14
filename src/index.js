@@ -15,7 +15,8 @@ import EmbedIcon from './icon/embed.svg';
 
 const tooltipHideAll = hideAll
 
-const embedlyScript = "https://cdn.embedly.com/widgets/platform.js"
+const embedlyScript = 'https://cdn.embedly.com/widgets/platform.js'
+const ramdaScript = 'https://cdn.jsdelivr.net/npm/ramda@0.25.0/dist/ramda.min.js'
 
 /**
  * @typedef {Object} EmbedData
@@ -67,7 +68,13 @@ export default class Embed {
     this.data = data;
     this.addrInput = null
 
+    this.addrDescWrapper = null
+    this.showProvidersDetail = false
+    this.addrProviderList = null
+    this.addrProviderToggler = null
+
     loadJS(embedlyScript, this.initEmbedly.bind(this), document.body);
+    loadJS(ramdaScript, null, document.body)
   }
 
   initEmbedly() {
@@ -149,10 +156,15 @@ export default class Embed {
       addrDescWrapper: 'embed-tool__addrwrapper-descwrapper',
       addrDescHeader: 'embed-tool__addrwrapper-descwrapper-header',
       addrDesc: 'embed-tool__addrwrapper-descwrapper-desc',
-      addrToggler: 'embed-tool__addrwrapper-descwrapper-toggler',
+      addrProviderToggler: 'embed-tool__addrwrapper-descwrapper-toggler',
       addrIconWrapper: 'embed-tool__addrwrapper-descwrapper-iconwrapper',
+      addrDetailIconWrapper: 'embed-tool__addrwrapper-descwrapper-detail-iconwrapper',
       addrIcon: 'embed-tool__addrwrapper-descwrapper-iconwrapper-icon',
+      addrDetailIcon: 'embed-tool__addrwrapper-descwrapper-detail-iconwrapper-icon',
       addrIconDivider: 'embed-tool__addrwrapper-descwrapper-iconwrapper-divider',
+      addrDetailWrapper: 'embed-tool__addrwrapper-descwrapper-detail-wrapper',
+      addrTypeTitle: 'embed-tool__addrwrapper-descwrapper-type-title',
+      addrFooterLink: 'embed-tool__addrwrapper-descwrapper-footer-link',
 
       providerCard: 'provider-wrapper',
       providerCardHeader: 'provider-wrapper-header',
@@ -171,10 +183,11 @@ export default class Embed {
    *
    * @return {HTMLElement}
    */
-  makeServiceIconList() {
+  makeProviderIconList() {
     const addrIconWrapper = this._make("div", this.CSS.addrIconWrapper);
-  
-    PROVIDERS.forEach(provider => {
+    const providers = R.filter(provider => provider.showInBrief, PROVIDERS) 
+
+    providers.forEach(provider => {
       const Icon= this._make("img", [this.CSS.addrIcon, 'icon-' + provider.domain], {
         src: provider.icon,
       })
@@ -196,30 +209,39 @@ export default class Embed {
     return addrIconWrapper
   }
 
-  makeServiceIconList2() {
-    const providerKeys = Object.keys(PROVIDERS)
-    const addrIconWrapper = this._make("div", this.CSS.addrIconWrapper);
-  
-    providerKeys.forEach(key => {
-      const Icon= this._make("img", [this.CSS.addrIcon, 'icon-' + key], {
-        src: PROVIDERS[key].icon,
+  makeProviderIconListDetails() {
+    const typeList = R.keys(R.groupBy((provide) => provide.type, PROVIDERS)) 
+    
+    const ListWrapper = this._make("div", this.CSS.addrDetailWrapper);
+
+    const FooterLink = this._make("a", this.CSS.addrFooterLink, {
+      href: "https://github.com/",
+      target: "_blank"
+    }); 
+    FooterLink.innerHTML = "侵权&nbsp;|&nbsp;建议&nbsp;|&nbsp;纠错"
+
+    typeList.forEach(type => {
+      const Title = this._make("div", this.CSS.addrTypeTitle, {})
+      Title.innerText = type + ":"
+      const curProviders = R.filter(R.propEq('type', type))(PROVIDERS)
+
+      const AddrIconWrapper = this._make("div", this.CSS.addrDetailIconWrapper);
+      curProviders.forEach(provider => {
+        const Icon= this._make("img", [this.CSS.addrDetailIcon, 'icon-' + provider.domain], {
+          src: provider.icon,
+        })
+
+        tippy(Icon, this.makeProviderCard(provider))
+
+        AddrIconWrapper.appendChild(Icon)
       })
 
-      tippy(Icon, this.makeProviderCard(PROVIDERS[key]))
-
-      addrIconWrapper.appendChild(Icon)
-
-      if(key === 'jsfiddle' || 
-         key === 'shaoshupai' || 
-         key === 'producthunt' || 
-         key === 'youtube') {
-        const Divider= this._make("div", this.CSS.addrIconDivider)
-        Divider.innerText = '/'
-        addrIconWrapper.appendChild(Divider)
-      }
+      ListWrapper.appendChild(Title)
+      ListWrapper.appendChild(AddrIconWrapper)
     })
-  
-    return addrIconWrapper
+
+    ListWrapper.appendChild(FooterLink)
+    return ListWrapper
   }
 
   /**
@@ -248,6 +270,8 @@ export default class Embed {
     InsertBtn.innerText = "插入示例"
 
     InsertBtn.addEventListener('click', () => {
+      if(this.isEmbeding()) return false
+
       this.addrInput.value = provider.demoEmbedLink
       this.addrInputHandler()
       this.addrInput.focus()
@@ -310,7 +334,8 @@ export default class Embed {
    */
   addrInputHandler() {
     const { value } = this.addrInput 
-    const providerKeys = Object.keys(PROVIDERS)
+    // Object.keys(PROVIDERS)
+    const providerKeys = R.pluck('domain', PROVIDERS)
     const domain = parseDomain(value)
 
     if(value.trim() === "") {
@@ -323,8 +348,6 @@ export default class Embed {
       }
       return false
     }
-
-    console.log('parseDomain:  ', domain)
 
     // if is unsupported domain, just hide the confirmbtn
     if(providerKeys.indexOf(domain) > -1) {
@@ -348,12 +371,45 @@ export default class Embed {
     }
   }
 
+  /**
+   * handle link embed after user confirm url in current input
+   *
+   */
   addrInputConfirmHandler() {
     const { value } = this.addrInput 
+    const domain = parseDomain(value)
+
+    if(domain === 'amap') {
+      return this.embedSpecialContent(domain)
+    }
+    this.embedDefaultContent(value)
+  }
+
+  embedSpecialContent(domain) {
+    console.log("render special iframe: ", domain)
+
     const container = document.querySelector('.' + this.CSS.container)
-    console.log('addrInputConfirmHandler: ', value)
+    console.log('container before: ', container)
+    const embedHTML = this._make('div', '')
+
+    // const mapSrc = "https://www.amap.com/search?query=%E5%8D%97%E6%B9%96%E5%85%AC%E5%9B%AD&city=510100&geoobj=104.064056%7C30.629666%7C104.073637%7C30.635279&zoom=17"
+    const mapSrc = "https://ditu.amap.com/search?query=%E5%8D%97%E6%B9%96%E5%85%AC%E5%9B%AD&city=510100&geoobj=104.064056%7C30.629666%7C104.073637%7C30.635279&zoom=17"
+    // const mapSrc = "https://www.amap.com/search?query=%E6%88%90%E9%83%BD%E5%B8%82&amp;city=510107&amp;geoobj=104.064056%7C30.629666%7C104.073637%7C30.635279&amp;zoom=17"
+    // embedHTML.innerHTML = `<iframe sandbox="allow-scripts allow-same-origin allow-popups allow-presentation" src="${mapSrc}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" style="width: 100%; height: 300px;"></iframe>`
+    embedHTML.innerHTML = `<iframe sandbox="allow-scripts allow-same-origin allow-presentation" src="${mapSrc}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" style="width: 100%; height: 300px;"></iframe>`
+  
+    container.innerHTML = null;
+    container.appendChild(embedHTML);
+  }
+
+  /**
+   * embed default content using embed.ly service
+   *
+   */
+  embedDefaultContent(url) {
+    const container = document.querySelector('.' + this.CSS.container)
     const embedHTML = this._make('a', 'embedly-card', {
-      href: value,
+      href: url,
       "data-card-controls": 0
     })
 
@@ -361,7 +417,6 @@ export default class Embed {
     embedHTML.setAttribute("data-card-controls", "0")
     container.appendChild(embedHTML);
 
-    console.log('loading')
     this.containerLoading.style.display = "block"
     embedly('on', 'card.rendered', (iframe) => {
       // iframe is the card iframe that we used to render the event.
@@ -369,9 +424,29 @@ export default class Embed {
       this.containerLoading.style.display = "none"
       this.adder.style.display = 'none'
     });
-
-
     // <a href="http://embed.ly" class="embedly-card">Embedly</a>
+  }
+
+  isEmbeding() {
+    return this.containerLoading.style.display === "block" ? true : false
+  }
+
+  /**
+   * toggle providers view type
+   *
+   */
+  handleProviderToggle() {
+    if(this.showProvidersDetail) {
+      this.addrProviderToggler.innerText = "展开全部"
+      this.addrProviderList.innerHTML = null
+      this.addrProviderList.appendChild(this.makeProviderIconList())
+    } else {
+      this.addrProviderToggler.innerText = "收起列表"
+      this.addrProviderList.innerHTML = null
+      this.addrProviderList.appendChild(this.makeProviderIconListDetails())
+    }
+
+    this.showProvidersDetail = !this.showProvidersDetail
   }
 
   /**
@@ -388,12 +463,12 @@ export default class Embed {
     this.addrInputBtn.addEventListener('click', debounce(this.addrInputConfirmHandler.bind(this), 300))
     this.containerLoading = this._make('div', this.CSS.containerLoading);
 
-    const addrDescWrapper = this._make('div', this.CSS.addrDescWrapper);
+    this.addrDescWrapper = this._make('div', this.CSS.addrDescWrapper);
     const addrDescHeader= this._make('div', this.CSS.addrDescHeader);
     const addrDesc = this._make('div', this.CSS.addrDesc);
-    const addrToggler = this._make('div', this.CSS.addrToggler);
 
-    const addrIconList = this.makeServiceIconList()
+    this.addrProviderToggler = this._make('div', this.CSS.addrProviderToggler);
+    this.addrProviderList = this.makeProviderIconList()
 
     this.addrInput.placeholder = "请输入网页地址"
     this.addrInput.addEventListener('input', debounce(this.addrInputHandler.bind(this), 300))
@@ -404,19 +479,21 @@ export default class Embed {
     addrInputWrapper.appendChild(this.addrInputBtn);
 
     addrDesc.innerText = "仅支持嵌入以下站点的内容或服务: "
-    addrToggler.innerText = "展开全部"
+    this.addrProviderToggler.innerText = "展开全部"
     addrDescHeader.appendChild(addrDesc);
-    addrDescHeader.appendChild(addrToggler);
+    addrDescHeader.appendChild(this.addrProviderToggler);
 
-    addrDescWrapper.appendChild(addrDescHeader);
-    addrDescWrapper.appendChild(addrIconList);
+    this.addrDescWrapper.appendChild(addrDescHeader);
+    this.addrDescWrapper.appendChild(this.addrProviderList);
 
     this.adder.appendChild(addrInputWrapper);
-    this.adder.appendChild(addrDescWrapper);
+    this.adder.appendChild(this.addrDescWrapper);
 
     container.appendChild(this.adder);
     container.appendChild(this.containerLoading);
     // const container = document.createElement('div');
+
+    this.addrProviderToggler.addEventListener("click", this.handleProviderToggle.bind(this))
 
     this.element = container;
 
