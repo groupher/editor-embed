@@ -382,14 +382,26 @@ export default class Embed {
     if(domain === 'amap') {
       return this.embedSpecialContent(domain)
     }
+    if(domain === 'bilibili') {
+      return this.embedBiliBili(domain)
+    }
     this.embedDefaultContent(value)
   }
 
-  embedSpecialContent(domain) {
-    console.log("render special iframe: ", domain)
-
+  embedBiliBili(domain) {
     const container = document.querySelector('.' + this.CSS.container)
-    console.log('container before: ', container)
+    const embedHTML = this._make('div', '')
+
+    const src = 'https://player.bilibili.com/player.html?aid=25898700'
+    embedHTML.innerHTML = `<iframe sandbox="allow-scripts allow-same-origin allow-popups allow-presentation" src="${src}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" style="width: 100%; height: 381.938px;"></iframe>`
+  
+    container.innerHTML = null;
+    container.appendChild(embedHTML);
+  }
+
+  // done
+  embedSpecialContent(domain) {
+    const container = document.querySelector('.' + this.CSS.container)
     const embedHTML = this._make('div', '')
 
     // const mapSrc = "https://www.amap.com/search?query=%E5%8D%97%E6%B9%96%E5%85%AC%E5%9B%AD&city=510100&geoobj=104.064056%7C30.629666%7C104.073637%7C30.635279&zoom=17"
