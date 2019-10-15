@@ -182,20 +182,23 @@ export default class Embed {
 
 
   setTopBorder(type = 'default') {
-    this.container.classList.remove('embed-top-success')
-    this.container.classList.remove('embed-top-error')
-    this.container.classList.remove('embed-top-default')
+    console.log("setTopBorder: ", this.element)
+    console.log("setTopBorder classList: ", this.element.classList)
+
+    this.element.classList.remove('embed-top-success')
+    this.element.classList.remove('embed-top-error')
+    this.element.classList.remove('embed-top-default')
 
     switch(type) {
       case 'success': {
-        return this.container.classList.add('embed-top-success')
+        return this.element.classList.add('embed-top-success')
       }
       case 'error': {
-        return this.container.classList.add('embed-top-error')
+        return this.element.classList.add('embed-top-error')
       }
 
       default: {
-        return this.container.classList.add('embed-top-default')
+        return this.element.classList.add('embed-top-default')
       }
     }
   }
