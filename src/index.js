@@ -5,11 +5,13 @@ import 'tippy.js/themes/light.css';
 
 import SERVICES from './services';
 import PROVIDERS from './providers';
-import { parseDomain, loadJS } from './utils'
+import { parseDomain, loadJS, getQueryFromUrl } from './utils'
+import { iframeFragment } from './local_embeds'
 
 import './index.css';
 
 // import { loadJS } from './utils';
+// TODO:  color border only when iframe renderd
 
 import EmbedIcon from './icon/embed.svg';
 
@@ -178,6 +180,26 @@ export default class Embed {
     };
   }
 
+
+  setTopBorder(type = 'default') {
+    this.container.classList.remove('embed-top-success')
+    this.container.classList.remove('embed-top-error')
+    this.container.classList.remove('embed-top-default')
+
+    switch(type) {
+      case 'success': {
+        return this.container.classList.add('embed-top-success')
+      }
+      case 'error': {
+        return this.container.classList.add('embed-top-error')
+      }
+
+      default: {
+        return this.container.classList.add('embed-top-default')
+      }
+    }
+  }
+
   /**
    * Render valid service icon list
    *
@@ -185,7 +207,7 @@ export default class Embed {
    */
   makeProviderIconList() {
     const addrIconWrapper = this._make("div", this.CSS.addrIconWrapper);
-    const providers = R.filter(provider => provider.showInBrief, PROVIDERS) 
+    const providers = R.filter(provider => provider.showInBrief, PROVIDERS)
 
     providers.forEach(provider => {
       const Icon= this._make("img", [this.CSS.addrIcon, 'icon-' + provider.domain], {
@@ -196,28 +218,28 @@ export default class Embed {
 
       addrIconWrapper.appendChild(Icon)
 
-      if(provider.domain === 'jsfiddle' || 
-         provider.domain === 'shaoshupai' || 
-         provider.domain === 'producthunt' || 
+      if(provider.domain === 'jsfiddle' ||
+         provider.domain === 'shaoshupai' ||
+         provider.domain === 'producthunt' ||
          provider.domain === 'youtube') {
         const Divider= this._make("div", this.CSS.addrIconDivider)
         Divider.innerText = '/'
         addrIconWrapper.appendChild(Divider)
       }
     })
-  
+
     return addrIconWrapper
   }
 
   makeProviderIconListDetails() {
-    const typeList = R.keys(R.groupBy((provide) => provide.type, PROVIDERS)) 
-    
+    const typeList = R.keys(R.groupBy((provide) => provide.type, PROVIDERS))
+
     const ListWrapper = this._make("div", this.CSS.addrDetailWrapper);
 
     const FooterLink = this._make("a", this.CSS.addrFooterLink, {
       href: "https://github.com/",
       target: "_blank"
-    }); 
+    });
     FooterLink.innerHTML = "侵权&nbsp;|&nbsp;建议&nbsp;|&nbsp;纠错"
 
     typeList.forEach(type => {
@@ -277,7 +299,7 @@ export default class Embed {
       this.addrInput.focus()
       tooltipHideAll()
     })
-    
+
     Intro.appendChild(Title)
     Intro.appendChild(Link)
 
@@ -329,11 +351,11 @@ export default class Embed {
 
   /**
    * handle addr input change
-   * 
+   *
    * highlight icon which the icon
    */
   addrInputHandler() {
-    const { value } = this.addrInput 
+    const { value } = this.addrInput
     // Object.keys(PROVIDERS)
     const providerKeys = R.pluck('domain', PROVIDERS)
     const domain = parseDomain(value)
@@ -376,42 +398,24 @@ export default class Embed {
    *
    */
   addrInputConfirmHandler() {
-    const { value } = this.addrInput 
+    const { value } = this.addrInput
     const domain = parseDomain(value)
 
-    if(domain === 'amap') {
-      return this.embedSpecialContent(domain)
-    }
-    if(domain === 'bilibili') {
-      return this.embedBiliBili(domain)
-    }
-    this.embedDefaultContent(value)
-  }
-
-  embedBiliBili(domain) {
     const container = document.querySelector('.' + this.CSS.container)
     const embedHTML = this._make('div', '')
 
-    const src = 'https://player.bilibili.com/player.html?aid=25898700'
-    embedHTML.innerHTML = `<iframe sandbox="allow-scripts allow-same-origin allow-popups allow-presentation" src="${src}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" style="width: 100%; height: 381.938px;"></iframe>`
-  
-    container.innerHTML = null;
-    container.appendChild(embedHTML);
-  }
+    if(R.contains(domain, ['amap', 'bilibili'])) {
+      const { html } = iframeFragment(value)
+      embedHTML.innerHTML =  html
 
-  // done
-  embedSpecialContent(domain) {
-    const container = document.querySelector('.' + this.CSS.container)
-    const embedHTML = this._make('div', '')
+      container.innerHTML = null;
+      container.appendChild(embedHTML);
 
-    // const mapSrc = "https://www.amap.com/search?query=%E5%8D%97%E6%B9%96%E5%85%AC%E5%9B%AD&city=510100&geoobj=104.064056%7C30.629666%7C104.073637%7C30.635279&zoom=17"
-    const mapSrc = "https://ditu.amap.com/search?query=%E5%8D%97%E6%B9%96%E5%85%AC%E5%9B%AD&city=510100&geoobj=104.064056%7C30.629666%7C104.073637%7C30.635279&zoom=17"
-    // const mapSrc = "https://www.amap.com/search?query=%E6%88%90%E9%83%BD%E5%B8%82&amp;city=510107&amp;geoobj=104.064056%7C30.629666%7C104.073637%7C30.635279&amp;zoom=17"
-    // embedHTML.innerHTML = `<iframe sandbox="allow-scripts allow-same-origin allow-popups allow-presentation" src="${mapSrc}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" style="width: 100%; height: 300px;"></iframe>`
-    embedHTML.innerHTML = `<iframe sandbox="allow-scripts allow-same-origin allow-presentation" src="${mapSrc}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" style="width: 100%; height: 300px;"></iframe>`
-  
-    container.innerHTML = null;
-    container.appendChild(embedHTML);
+      this.setTopBorder('success')
+      return false
+    }
+
+    return this.embedDefaultContent(value)
   }
 
   /**
@@ -432,9 +436,14 @@ export default class Embed {
     this.containerLoading.style.display = "block"
     embedly('on', 'card.rendered', (iframe) => {
       // iframe is the card iframe that we used to render the event.
+      console.log('iframe --> ', iframe)
+      console.log("hell: ", iframe.querySelector('#cards'))
+
       console.log('loading done')
       this.containerLoading.style.display = "none"
       this.adder.style.display = 'none'
+
+      this.setTopBorder('success')
     });
     // <a href="http://embed.ly" class="embedly-card">Embedly</a>
   }

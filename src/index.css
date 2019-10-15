@@ -1,10 +1,28 @@
+
+.embed-top-success {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-top: 3px solid #2aa198;
+}
+
+.embed-top-error {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-top: 3px solid tomato;
+}
+
+.embed-top-default {
+  border: 1px solid;
+  border-color: #e4e4e4;
+}
+
 .embed-tool {
   margin-top: 20px;
   border: 1px solid;
   border-color: #e4e4e4;
+  border-radius: 10px;
   width: 100%;
   min-height: 120px;
-  border-radius: 10px;
 
   &--loading {
     display: none;
