@@ -182,9 +182,6 @@ export default class Embed {
 
 
   setTopBorder(type = 'default') {
-    console.log("setTopBorder: ", this.element)
-    console.log("setTopBorder classList: ", this.element.classList)
-
     this.element.classList.remove('embed-top-success')
     this.element.classList.remove('embed-top-error')
     this.element.classList.remove('embed-top-default')
@@ -426,7 +423,6 @@ export default class Embed {
    *
    */
   embedDefaultContent(url) {
-    const container = document.querySelector('.' + this.CSS.container)
     const embedHTML = this._make('a', 'embedly-card', {
       href: url,
       "data-card-controls": 0
@@ -434,14 +430,11 @@ export default class Embed {
 
     // embedHTML.dataset["card-controls"] = 0
     embedHTML.setAttribute("data-card-controls", "0")
-    container.appendChild(embedHTML);
+    this.element.appendChild(embedHTML);
 
     this.containerLoading.style.display = "block"
     embedly('on', 'card.rendered', (iframe) => {
       // iframe is the card iframe that we used to render the event.
-      console.log('iframe --> ', iframe)
-      console.log("hell: ", iframe.querySelector('#cards'))
-
       console.log('loading done')
       this.containerLoading.style.display = "none"
       this.adder.style.display = 'none'
@@ -522,24 +515,6 @@ export default class Embed {
     this.element = container;
 
     return container;
-  }
-
-  /**
-   * Creates preloader to append to container while data is loading
-   * @return {HTMLElement} preloader
-   */
-  createPreloader() {
-    const preloader = document.createElement('preloader');
-    const url = document.createElement('div');
-
-    url.textContent = this.data.source;
-
-    preloader.classList.add(this.CSS.preloader);
-    url.classList.add(this.CSS.url);
-
-    preloader.appendChild(url);
-
-    return preloader;
   }
 
   /**
