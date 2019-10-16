@@ -4,8 +4,15 @@ import CodesandboxIcon from './icon/codesandbox.png'
 import JsfiddleIcon from './icon/jsfiddle.png'
 import DribbleIcon from './icon/dribble.png'
 import ProducthuntIcon from './icon/producthunt.png'
+
+// 视频类
 import BiliBiliIcon from './icon/bilibili.png'
 import YoutubeIcon from './icon/youtube.png'
+import TedIcon from './icon/ted.png'
+
+// 教程类
+import EggheadIcon from './icon/egghead.png'
+
 import GaodeIcon from './icon/gaode.png'
 import GfycatIcon from './icon/gfycat.png'
 
@@ -182,7 +189,28 @@ export default [
     type: "视频类",
     showInBrief: true
   },
+  {
+    domain: 'ted',
+    icon: TedIcon,
+    title: "ted",
+    link: "https:/ted.com",
+    desc: "支持嵌入站内各种 ted 视频等",
+    demoEmbedLink: "https://www.ted.com/talks/linus_torvalds_the_mind_behind_linux",
+    type: "视频类",
+  },
 
+  // 教程类
+  {
+    domain: 'https://egghead.io/',
+    icon: EggheadIcon,
+    title: "egghead",
+    link: "https:/ted.com",
+    desc: "支持嵌入站内各种视频，文章等",
+    demoEmbedLink: "https://egghead.io/lessons/react-build-react-from-source",
+    type: "教程类",
+  },
+
+  // 其他类
   {
     domain: 'amap',
     icon: GaodeIcon,
