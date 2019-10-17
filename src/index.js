@@ -209,9 +209,9 @@ export default class Embed {
       addrIconWrapper.appendChild(Icon)
 
       if(provider.domain === 'jsfiddle' ||
-         provider.domain === 'shaoshupai' ||
+         provider.domain === 'infoq' ||
          provider.domain === 'producthunt' ||
-         provider.domain === 'youtube') {
+         provider.domain === 'ted') {
         const Divider= this._make("div", this.CSS.addrIconDivider)
         Divider.innerText = '/'
         addrIconWrapper.appendChild(Divider)

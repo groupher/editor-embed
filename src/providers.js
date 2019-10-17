@@ -111,22 +111,22 @@ export default [
   },
   // 资讯类
   { 
-    domain: 'zhihu',
-    icon: ZhihuIcon,
-    title: "知乎",
-    link: "https://zhihu.com",
-    desc: "支持嵌入专栏，回答，用户主页等",
-    demoEmbedLink: "https://zhuanlan.zhihu.com/coderplanets",
-    type: "资讯类",
-    showInBrief: true
-  },
-  { 
     domain: 'medium',
     icon: MediumIcon ,
     title: "medium",
     link: "https://medium.com",
     desc: "支持嵌入站内各种文章等, 使用 medium 搭建的博客可能无法解析，请提交 issue 支持",
     demoEmbedLink: "https://medium.com/free-code-camp/how-to-write-a-super-fast-link-shortener-with-elixir-phoenix-and-mnesia-70ffa1564b3c",
+    type: "资讯类",
+    showInBrief: true
+  },
+  { 
+    domain: 'zhihu',
+    icon: ZhihuIcon,
+    title: "知乎",
+    link: "https://zhihu.com",
+    desc: "支持嵌入专栏，回答，用户主页等",
+    demoEmbedLink: "https://zhuanlan.zhihu.com/coderplanets",
     type: "资讯类",
     showInBrief: true
   },
@@ -203,7 +203,6 @@ export default [
     desc: "支持嵌入文章，用户主页等",
     demoEmbedLink: "https://juejin.im/post/5d940e995188254463385ed4",
     type: "资讯类",
-    showInBrief: true
   },
   { 
     domain: 'infoq',
@@ -223,7 +222,6 @@ export default [
     desc: "支持嵌入文章，介绍等",
     demoEmbedLink: "https://www.ifanr.com/1266218",
     type: "资讯类",
-    showInBrief: true
   },
   { 
     domain: 'sspai',
@@ -233,7 +231,6 @@ export default [
     desc: "支持嵌入文章，介绍等",
     demoEmbedLink: "https://sspai.com/post/56836",
     type: "资讯类",
-    showInBrief: true
   },
 
   // 设计类
@@ -354,6 +351,7 @@ export default [
     desc: "支持嵌入站内各种 ted 视频等",
     demoEmbedLink: "https://www.ted.com/talks/linus_torvalds_the_mind_behind_linux",
     type: "视频类",
+    showInBrief: true
   },
 
   // 教程类
