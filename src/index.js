@@ -72,13 +72,26 @@ export default class Embed {
     this.addrProviderList = null
     this.addrProviderToggler = null
 
-    loadJS(embedlyScript, this.initEmbedly.bind(this), document.body);
+    loadJS(embedlyScript, null, document.body);
     loadJS(ramdaScript, null, document.body)
   }
 
-  initEmbedly() {
-    // console.log("embedly: ", embedly)
-    // <a href="http://embed.ly" class="embedly-card">Embedly</a>
+  /**
+   * Save current content and return EmbedData object
+   *
+   * @return {EmbedData}
+   */
+  save() {
+    return this.data;
+  }
+
+  /**
+   * Paste configuration to enable pasted URLs processing by Editor
+   */
+  static get pasteConfig() {
+    return {
+      patterns: Embed.patterns
+    };
   }
 
   static get toolbox() {
@@ -175,27 +188,7 @@ export default class Embed {
       providerCardFooter: 'provider-wrapper__footer',
       providerCardFooterBtn: 'provider-wrapper__footer_btn',
     };
-  }
-
-
-  setTopBorder(type = 'default') {
-    this.element.classList.remove('embed-top-success')
-    this.element.classList.remove('embed-top-error')
-    this.element.classList.remove('embed-top-default')
-
-    switch(type) {
-      case 'success': {
-        return this.element.classList.add('embed-top-success')
-      }
-      case 'error': {
-        return this.element.classList.add('embed-top-error')
-      }
-
-      default: {
-        return this.element.classList.add('embed-top-default')
-      }
-    }
-  }
+  } 
 
   /**
    * Render valid service icon list
@@ -359,14 +352,8 @@ export default class Embed {
 
     if(value.trim() === "") {
       this.hideConfirmBtn()
-      for(let i = 0; i < providerKeys.length; i++ ) {
-        const curKey = providerKeys[i]
-        const curIcon = document.querySelector('.icon-' + curKey)
-        if (curIcon) {
-          curIcon.style.opacity = 1
-          curIcon.style.filter = "grayscale(0)"
-        }
-      }
+      // lighten all the icons
+      this.lightenAllProviderIcons(providerKeys)
       return false
     }
 
@@ -380,17 +367,9 @@ export default class Embed {
     // highlight the current domain for current provider
     for(let i = 0; i < providerKeys.length; i++ ) {
       const curKey = providerKeys[i]
-      const curIcon = document.querySelector('.icon-' + curKey)
+      const icon = document.querySelector('.icon-' + curKey)
 
-      if(curIcon) {
-        if (domain === curKey) {
-          curIcon.style.opacity = 1
-          curIcon.style.filter = "grayscale(0)"
-        } else {
-          curIcon.style.opacity = 0.5
-          curIcon.style.filter = "grayscale(1)"
-        }
-      }
+      domain === curKey ? this.setIcon(icon, "on") : this.setIcon(icon, "off")
     }
   }
 
@@ -520,21 +499,56 @@ export default class Embed {
   }
 
   /**
-   * Save current content and return EmbedData object
-   *
-   * @return {EmbedData}
+   * set top border color for card
+   * @param type, string, default | success | error
    */
-  save() {
-    return this.data;
+  setTopBorder(type = 'default') {
+    this.element.classList.remove('embed-top-success')
+    this.element.classList.remove('embed-top-error')
+    this.element.classList.remove('embed-top-default')
+
+    switch(type) {
+      case 'success': {
+        return this.element.classList.add('embed-top-success')
+      }
+      case 'error': {
+        return this.element.classList.add('embed-top-error')
+      }
+
+      default: {
+        return this.element.classList.add('embed-top-default')
+      }
+    }
   }
 
   /**
-   * Paste configuration to enable pasted URLs processing by Editor
+   * lighten all the provider icons
+   * @param providerKeys, array of string
    */
-  static get pasteConfig() {
-    return {
-      patterns: Embed.patterns
-    };
+  lightenAllProviderIcons(providerKeys) {
+    for(let i = 0; i < providerKeys.length; i++ ) {
+      const curKey = providerKeys[i]
+      const icon = document.querySelector('.icon-' + curKey)
+
+      this.setIcon(icon, "on")
+    }
+  }
+
+  /**
+   * Helper method for elements creation
+   * @param icon, HTMLElement
+   * @param type, string, on | off
+   */
+  setIcon(icon, type="on") {
+    if(!icon) return false
+
+    if(type === "on") {
+      icon.style.opacity = 1
+      icon.style.filter = "grayscale(0)"
+    } else {
+      icon.style.opacity = 0.5
+      icon.style.filter = "grayscale(1)"
+    }
   }
 
   /**
