@@ -362,8 +362,10 @@ export default class Embed {
       for(let i = 0; i < providerKeys.length; i++ ) {
         const curKey = providerKeys[i]
         const curIcon = document.querySelector('.icon-' + curKey)
-        curIcon.style.opacity = 1
-        curIcon.style.filter = "grayscale(0)"
+        if (curIcon) {
+          curIcon.style.opacity = 1
+          curIcon.style.filter = "grayscale(0)"
+        }
       }
       return false
     }
@@ -380,12 +382,14 @@ export default class Embed {
       const curKey = providerKeys[i]
       const curIcon = document.querySelector('.icon-' + curKey)
 
-      if (domain === curKey) {
-        curIcon.style.opacity = 1
-        curIcon.style.filter = "grayscale(0)"
-      } else {
-        curIcon.style.opacity = 0.5
-        curIcon.style.filter = "grayscale(1)"
+      if(curIcon) {
+        if (domain === curKey) {
+          curIcon.style.opacity = 1
+          curIcon.style.filter = "grayscale(0)"
+        } else {
+          curIcon.style.opacity = 0.5
+          curIcon.style.filter = "grayscale(1)"
+        }
       }
     }
   }
