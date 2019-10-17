@@ -6,7 +6,7 @@ import 'tippy.js/themes/light.css';
 import SERVICES from './services';
 import PROVIDERS from './providers';
 import { parseDomain, loadJS, getQueryFromUrl } from './utils'
-import { iframeFragment } from './local_embeds'
+import { customIframeFragment, CUSTOM_PROVIDERS  } from './custom_embeds'
 
 import './index.css';
 
@@ -404,8 +404,8 @@ export default class Embed {
     const container = document.querySelector('.' + this.CSS.container)
     const embedHTML = this._make('div', '')
 
-    if(R.contains(domain, ['amap', 'bilibili'])) {
-      const { html } = iframeFragment(value)
+    if(R.contains(domain, CUSTOM_PROVIDERS)) {
+      const { html } = customIframeFragment(value)
       embedHTML.innerHTML =  html
 
       container.innerHTML = null;
@@ -432,6 +432,7 @@ export default class Embed {
     embedHTML.setAttribute("data-card-controls", "0")
     this.element.appendChild(embedHTML);
 
+    this.adder.style.display = 'none'
     this.containerLoading.style.display = "block"
     embedly('on', 'card.rendered', (iframe) => {
       // iframe is the card iframe that we used to render the event.

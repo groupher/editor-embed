@@ -1,11 +1,19 @@
 
 import { parseDomain } from './utils'
 
-export const iframeFragment = (url) => {
+export const CUSTOM_PROVIDERS = ['amap', 'bilibili']
+
+/**
+ * the provider that embedly can't parse or parse not right
+ * @param url, string
+ * @return {object} {valid: bool, iframe: string}
+ */
+export const  customIframeFragment = (url) => {
   const domain = parseDomain(url)
 
   switch(domain) {
     case 'amap': {
+      // TODO: 
       // const mapSrc = "https://www.amap.com/search?query=%E5%8D%97%E6%B9%96%E5%85%AC%E5%9B%AD&city=510100&geoobj=104.064056%7C30.629666%7C104.073637%7C30.635279&zoom=17"
       const mapSrc = "https://ditu.amap.com/search?query=%E5%8D%97%E6%B9%96%E5%85%AC%E5%9B%AD&city=510100&geoobj=104.064056%7C30.629666%7C104.073637%7C30.635279&zoom=17"
       // const mapSrc = "https://www.amap.com/search?query=%E6%88%90%E9%83%BD%E5%B8%82&amp;city=510107&amp;geoobj=104.064056%7C30.629666%7C104.073637%7C30.635279&amp;zoom=17"
@@ -14,6 +22,7 @@ export const iframeFragment = (url) => {
       return { valid: true, html }
     }
     case 'bilibili': {
+      // TODO:  try-catch
       // const url = 'https://www.bilibili.com/video/av35398818/'
       const { pathname } = new URL(url)
 
@@ -30,5 +39,3 @@ export const iframeFragment = (url) => {
     }
   }
 }
-
-export const holder = 1

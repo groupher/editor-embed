@@ -1,8 +1,39 @@
+// 开发类
+import GithubIcon from './icon/github.png'
 import ReplitIcon from './icon/replit.png'
 import CodepenIcon from './icon/codepen.png'
 import CodesandboxIcon from './icon/codesandbox.png'
 import JsfiddleIcon from './icon/jsfiddle.png'
+import VscodeIcon from './icon/vscode.png'
+
+import FlaticonIcon from './icon/flaticon.png'
+
+// 资讯类
+import TechcrunchIcon from './icon/techcrunch.png'
+import V2exIcon from './icon/v2ex.png'
+import JuejinIcon from './icon/juejin.png'
+import IfanrIcon from './icon/ifanr.png'
+import InfoQIcon from './icon/infoq.png'
+import ShaoshupaiIcon from './icon/shaoshupai.png'
+import ZhihuIcon from './icon/zhihu.png'
+
+import MediumIcon from './icon/medium.png'
+import OschinaIcon from './icon/oschina.png'
+import CnblogsIcon from './icon/cnblogs.png'
+import JianshuIcon from './icon/jianshu.png'
+import SegmentfaultIcon from './icon/segmentfault.png'
+import WoshipmIcon from './icon/woshipm.png'
+
+// 设计类
 import DribbleIcon from './icon/dribble.png'
+import MuzliIcon from './icon/muzli.png'
+import ColossalIcon from './icon/thisiscolossal.png'
+import InvisionappIcon from './icon/invisionapp.png'
+import ZcoolIcon from './icon/zcool.jpeg'
+import ArchdailyIcon from './icon/archdaily.png'
+import CodropsIcon from './icon/codrops.png'
+import CssdesignawardsIcon from './icon/cssdesignawards.png'
+
 import ProducthuntIcon from './icon/producthunt.png'
 
 // 视频类
@@ -12,18 +43,11 @@ import TedIcon from './icon/ted.png'
 
 // 教程类
 import EggheadIcon from './icon/egghead.png'
+import XiaozhuanlanIcon from './icon/xiaozhuanlan.png'
 
 import GaodeIcon from './icon/gaode.png'
 import GfycatIcon from './icon/gfycat.png'
 
-import GithubIcon from './icon/github.png'
-import TechcrunchIcon from './icon/techcrunch.png'
-import V2exIcon from './icon/v2ex.png'
-import JuejinIcon from './icon/juejin.png'
-import IfanrIcon from './icon/ifanr.png'
-import InfoQIcon from './icon/infoq.png'
-import ShaoshupaiIcon from './icon/shaoshupai.png'
-import ZhihuIcon from './icon/zhihu.png'
 
 export default [
   {
@@ -76,7 +100,16 @@ export default [
     type: "开发类",
     showInBrief: true
   },
-
+  { 
+    domain: 'visualstudio',
+    icon: VscodeIcon,
+    title: "visualstudio",
+    link: "https://marketplace.visualstudio.com",
+    desc: "支持嵌入 vsc 系列的各种工具，插件等 ",
+    demoEmbedLink: "https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode",
+    type: "开发类",
+  },
+  // 资讯类
   { 
     domain: 'zhihu',
     icon: ZhihuIcon,
@@ -86,6 +119,61 @@ export default [
     demoEmbedLink: "https://zhuanlan.zhihu.com/coderplanets",
     type: "资讯类",
     showInBrief: true
+  },
+  { 
+    domain: 'medium',
+    icon: MediumIcon ,
+    title: "medium",
+    link: "https://medium.com",
+    desc: "支持嵌入站内各种文章等, 使用 medium 搭建的博客可能无法解析，请提交 issue 支持",
+    demoEmbedLink: "https://medium.com/free-code-camp/how-to-write-a-super-fast-link-shortener-with-elixir-phoenix-and-mnesia-70ffa1564b3c",
+    type: "资讯类",
+    showInBrief: true
+  },
+  { 
+    domain: 'oschina',
+    icon: OschinaIcon ,
+    title: "开源中国",
+    link: "https://oschina.net",
+    desc: "支持嵌入 oschina 域下的各种内容",
+    demoEmbedLink: "https://www.oschina.net/translate/a-guide-to-optimistic-locking",
+    type: "资讯类",
+  }, 
+  { 
+    domain: 'cnblogs',
+    icon: CnblogsIcon,
+    title: "博客园",
+    link: "https://cnblogs.com",
+    desc: "支持嵌入 cnblogs 域下的各种内容",
+    demoEmbedLink: "https://www.cnblogs.com/smallSevens/p/11691432.html",
+    type: "资讯类",
+  }, 
+  { 
+    domain: 'jianshu',
+    icon: JianshuIcon,
+    title: '简书',
+    link: "https://jianshu.com",
+    desc: "支持嵌入 jianshu 域下的各种内容",
+    demoEmbedLink: "https://www.jianshu.com/p/b7ec14a67a06",
+    type: "资讯类",
+  }, 
+  { 
+    domain: 'segmentfault',
+    icon: SegmentfaultIcon,
+    title: '思否',
+    link: "https://segmentfault.com",
+    desc: "支持嵌入 segmentfault 域下的各种内容",
+    demoEmbedLink: "https://segmentfault.com/a/1190000020716933",
+    type: "资讯类",
+  }, 
+  { 
+    domain: 'woshipm',
+    icon: WoshipmIcon,
+    title: '人人都是产品经理',
+    link: "http://www.woshipm.com/",
+    desc: "支持嵌入站内的各种内容",
+    demoEmbedLink: "http://www.woshipm.com/pd/2938314.html",
+    type: "资讯类",
   },
   { 
     domain: 'v2ex',
@@ -148,6 +236,7 @@ export default [
     showInBrief: true
   },
 
+  // 设计类
   {
     domain: 'dribbble',
     icon: DribbleIcon,
@@ -159,6 +248,70 @@ export default [
     showInBrief: true
   },
   {
+    domain: 'muz',
+    icon: MuzliIcon,
+    title: "muzli",
+    link: "https://medium.muz.li/",
+    desc: "支持嵌入站内各种内容",
+    demoEmbedLink: "https://medium.muz.li/63-beautiful-dark-ui-examples-design-inspiration-8abaa1b86969",
+    type: "设计类",
+  },
+  {
+    domain: 'invisionapp',
+    icon: InvisionappIcon,
+    title: "invision",
+    link: "https://www.invisionapp.com/",
+    desc: "支持嵌入站内各种内容",
+    demoEmbedLink: "https://www.invisionapp.com/inside-design/top-5-design-resources/",
+    type: "设计类",
+  },
+  {
+    domain: 'thisiscolossal',
+    icon: ColossalIcon,
+    title: "colossal",
+    link: "https://www.thisiscolossal.com",
+    desc: "支持嵌入站内各种内容",
+    demoEmbedLink: "https://www.thisiscolossal.com",
+    type: "设计类",
+  },
+  {
+    domain: 'zcool',
+    icon: ZcoolIcon,
+    title: "站酷",
+    link: "https://www.zcool.com.cn/",
+    desc: "支持嵌入站内各种内容",
+    demoEmbedLink: "https://www.zcool.com.cn/work/ZMzk5NzE3NjQ=.html",
+    type: "设计类",
+    showInBrief: true
+  },
+  {
+    domain: 'archdaily',
+    icon: ArchdailyIcon,
+    title: "archdaily",
+    link: "https://www.archdaily.com",
+    desc: "支持嵌入站内各种内容",
+    demoEmbedLink: "https://www.archdaily.cn/cn/926449/tai-guo-hun-yan-ting-aube-phtaa-living-design?ad_content=926449&ad_medium=widget&ad_name=featured_loop_main",
+    type: "设计类",
+  },
+  {
+    domain: 'tympanus',
+    icon: CodropsIcon,
+    title: "codrops",
+    link: "https://tympanus.net/codrops",
+    desc: "支持嵌入站内各种内容",
+    demoEmbedLink: "https://tympanus.net/codrops/2019/10/16/case-study-chang-liu-portfolio-v4/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+tympanus+%28Codrops%29",
+    type: "设计类",
+  }, 
+  {
+    domain: 'cssdesignawards',
+    icon: CssdesignawardsIcon,
+    title: "cssdesignawards",
+    link: "https://www.cssdesignawards.com/",
+    desc: "支持嵌入站内各种内容",
+    demoEmbedLink: "https://www.cssdesignawards.com/sites/vostokcement/35973",
+    type: "设计类",
+  }, 
+  {
     domain: 'producthunt',
     icon: ProducthuntIcon,
     title: "producthunt",
@@ -169,6 +322,9 @@ export default [
     showInBrief: true
   },
 
+  // 产品类
+
+  // 视频类
   {
     domain: 'bilibili',
     icon: BiliBiliIcon,
@@ -179,6 +335,7 @@ export default [
     type: "视频类",
     showInBrief: true
   },
+
   {
     domain: 'youtube',
     icon: YoutubeIcon,
@@ -201,12 +358,21 @@ export default [
 
   // 教程类
   {
-    domain: 'https://egghead.io/',
+    domain: 'egghead',
     icon: EggheadIcon,
     title: "egghead",
-    link: "https:/ted.com",
+    link: "https://egghead.io/",
     desc: "支持嵌入站内各种视频，文章等",
     demoEmbedLink: "https://egghead.io/lessons/react-build-react-from-source",
+    type: "教程类",
+  },
+  {
+    domain: 'xiaozhuanlan',
+    icon: XiaozhuanlanIcon,
+    title: "小专栏",
+    link: "https:/xiaozhuanlan.com",
+    desc: "支持嵌入站内各种专栏等",
+    demoEmbedLink: "https://xiaozhuanlan.com/example",
     type: "教程类",
   },
 
