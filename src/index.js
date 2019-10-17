@@ -329,7 +329,7 @@ export default class Embed {
    *
    */
   showConfirmBtn() {
-    this.addrInput.style.width = 'calc(100% - 80px)'
+    this.addrInput.style.width = 'calc(100% - 70px)'
     setTimeout(() => {
       this.addrInputBtn.style.display = "inline-block"
     }, 500)
