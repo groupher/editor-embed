@@ -10,9 +10,6 @@ import { customIframeFragment, CUSTOM_PROVIDERS  } from './custom_embeds'
 
 import './index.css';
 
-// import { loadJS } from './utils';
-// TODO:  color border only when iframe renderd
-
 import EmbedIcon from './icon/embed.svg';
 
 const tooltipHideAll = hideAll
