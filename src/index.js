@@ -115,33 +115,30 @@ export default class Embed {
       throw Error('Embed Tool data should be object');
     }
 
-    const {service, source, embed, width, height, caption = ''} = data;
+    // const {service, source, embed, width, height, caption = ''} = data;
 
+    // TODO:  check valid
     this._data = {
-      service: service || this.data.service,
-      source: source || this.data.source,
-      embed: embed || this.data.embed,
-      width: width || this.data.width,
-      height: height || this.data.height,
-      caption: caption || this.data.caption || '',
+      type: 'embedly', // embedly or iframe
+      value: this.addrInput ? this.addrInput.value : '',
     };
 
-    const oldView = this.element;
+    // const oldView = this.element;
 
-    if (oldView) {
-      oldView.parentNode.replaceChild(this.render(), oldView);
-    }
+    // if (oldView) {
+    //   oldView.parentNode.replaceChild(this.render(), oldView);
+    // }
   }
 
   /**
    * @return {EmbedData}
    */
   get data() {
-    if (this.element) {
-      const caption = this.element.querySelector(`.${this.api.styles.input}`);
+    // if (this.element) {
+    //   const caption = this.element.querySelector(`.${this.api.styles.input}`);
 
-      this._data.caption = caption ? caption.innerHTML : '';
-    }
+    //   this._data.caption = caption ? caption.innerHTML : '';
+    // }
 
     return this._data;
   }
