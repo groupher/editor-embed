@@ -1,52 +1,56 @@
 // 开发类
-import GithubIcon from './icon/github.png'
-import ReplitIcon from './icon/replit.png'
-import CodepenIcon from './icon/codepen.png'
-import CodesandboxIcon from './icon/codesandbox.png'
-import JsfiddleIcon from './icon/jsfiddle.png'
-import VscodeIcon from './icon/vscode.png'
+// or you can import like this:
+// import ArchdailyIcon from './icon/archdaily.png'
+const ASSET_BASE = 'https://cps-oss.oss-cn-shanghai.aliyuncs.com/embeds/'
 
-import FlaticonIcon from './icon/flaticon.png'
+const GithubIcon = ASSET_BASE + 'github.png'
+const ReplitIcon = ASSET_BASE + 'replit.png'
+const CodepenIcon = ASSET_BASE + 'codepen.png'
+const CodesandboxIcon =  ASSET_BASE + 'codesandbox.png'
+const JsfiddleIcon = ASSET_BASE + 'jsfiddle.png'
+const VscodeIcon = ASSET_BASE + 'vscode.png'
+
+const FlaticonIcon = ASSET_BASE + 'flaticon.png'
 
 // 资讯类
-import TechcrunchIcon from './icon/techcrunch.png'
-import V2exIcon from './icon/v2ex.png'
-import JuejinIcon from './icon/juejin.png'
-import IfanrIcon from './icon/ifanr.png'
-import InfoQIcon from './icon/infoq.png'
-import ShaoshupaiIcon from './icon/shaoshupai.png'
-import ZhihuIcon from './icon/zhihu.png'
+const TechcrunchIcon = ASSET_BASE + 'techcrunch.png'
+const V2exIcon = ASSET_BASE + 'v2ex.png'
+const JuejinIcon = ASSET_BASE + 'juejin.png'
+const IfanrIcon = ASSET_BASE + 'ifanr.png'
+const InfoQIcon = ASSET_BASE + 'infoq.png'
+const ShaoshupaiIcon = ASSET_BASE + 'shaoshupai.png'
+const ZhihuIcon = ASSET_BASE + 'zhihu.png'
 
-import MediumIcon from './icon/medium.png'
-import OschinaIcon from './icon/oschina.png'
-import CnblogsIcon from './icon/cnblogs.png'
-import JianshuIcon from './icon/jianshu.png'
-import SegmentfaultIcon from './icon/segmentfault.png'
-import WoshipmIcon from './icon/woshipm.png'
+const MediumIcon = ASSET_BASE + 'medium.png'
+const OschinaIcon = ASSET_BASE + 'oschina.png'
+const CnblogsIcon = ASSET_BASE + 'cnblogs.png'
+const JianshuIcon = ASSET_BASE + 'jianshu.png'
+const SegmentfaultIcon = ASSET_BASE + 'segmentfault.png'
+const WoshipmIcon = ASSET_BASE + 'woshipm.png'
 
 // 设计类
-import DribbleIcon from './icon/dribble.png'
-import MuzliIcon from './icon/muzli.png'
-import ColossalIcon from './icon/thisiscolossal.png'
-import InvisionappIcon from './icon/invisionapp.png'
-import ZcoolIcon from './icon/zcool.jpeg'
-import ArchdailyIcon from './icon/archdaily.png'
-import CodropsIcon from './icon/codrops.png'
-import CssdesignawardsIcon from './icon/cssdesignawards.png'
+const DribbleIcon = ASSET_BASE + 'dribble.png'
+const MuzliIcon = ASSET_BASE + 'muzli.png'
+const ColossalIcon = ASSET_BASE + 'thisiscolossal.png'
+const InvisionappIcon = ASSET_BASE + 'invisionapp.png'
+const ZcoolIcon = ASSET_BASE + 'zcool.jpeg'
+const ArchdailyIcon = ASSET_BASE + 'archdaily.png'
+const CodropsIcon = ASSET_BASE + 'codrops.png'
+const CssdesignawardsIcon = ASSET_BASE + 'cssdesignawards.png'
 
-import ProducthuntIcon from './icon/producthunt.png'
+const ProducthuntIcon = ASSET_BASE + 'producthunt.png'
 
 // 视频类
-import BiliBiliIcon from './icon/bilibili.png'
-import YoutubeIcon from './icon/youtube.png'
-import TedIcon from './icon/ted.png'
+const BiliBiliIcon = ASSET_BASE + 'bilibili.png'
+const YoutubeIcon = ASSET_BASE + 'youtube.png'
+const TedIcon = ASSET_BASE + 'ted.png'
 
 // 教程类
-import EggheadIcon from './icon/egghead.png'
-import XiaozhuanlanIcon from './icon/xiaozhuanlan.png'
+const EggheadIcon = ASSET_BASE + 'egghead.png'
+const XiaozhuanlanIcon = ASSET_BASE + 'xiaozhuanlan.png'
 
-import GaodeIcon from './icon/gaode.png'
-import GfycatIcon from './icon/gfycat.png'
+const GaodeIcon = ASSET_BASE + 'gaode.png'
+const GfycatIcon = ASSET_BASE + 'gfycat.png'
 
 
 export default [

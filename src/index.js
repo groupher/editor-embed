@@ -3,7 +3,6 @@ import tippy, { hideAll } from 'tippy.js'
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 
-import SERVICES from './services';
 import PROVIDERS from './providers';
 import { parseDomain, loadJS, getQueryFromUrl } from './utils'
 import { customIframeFragment, CUSTOM_PROVIDERS  } from './custom_embeds'
@@ -188,6 +187,17 @@ export default class Embed {
   } 
 
   /**
+   * set saved data by type
+   */
+  setData(type='embedly') {
+    // embedly or iframe
+    this._data = {
+      type,
+      value: this.addrInput ? this.addrInput.value : '',
+    };
+  }
+
+  /**
    * Render valid service icon list
    *
    * @return {HTMLElement}
@@ -319,7 +329,8 @@ export default class Embed {
    *
    */
   showConfirmBtn() {
-    this.addrInput.style.width = 'calc(100% - 70px)'
+    this.addrInput.style.width = 'calc(100% - 75px)'
+
     setTimeout(() => {
       this.addrInputBtn.style.display = "inline-block"
     }, 500)
@@ -350,18 +361,24 @@ export default class Embed {
     if(value.trim() === "") {
       this.hideConfirmBtn()
       // lighten all the icons
-      this.lightenAllProviderIcons(providerKeys)
+      this.lightenAllProviderIcons()
       return false
     }
 
     // if is unsupported domain, just hide the confirmbtn
-    if(providerKeys.indexOf(domain) > -1) {
-      this.showConfirmBtn()
-    } else {
-      this.hideConfirmBtn()
-    }
+    providerKeys.indexOf(domain) > -1 ? this.showConfirmBtn() : this.hideConfirmBtn()
+    this.highlightCurrentProviderIcon()
+  }
 
-    // highlight the current domain for current provider
+  // highlight the current provider icon for current domain
+  highlightCurrentProviderIcon() {
+    const { value } = this.addrInput
+    if (R.isEmpty(value.trim())) return false
+
+    const providerKeys = R.pluck('domain', PROVIDERS)
+    const domain = parseDomain(value)
+
+    // highlight the current provider icon for current domain
     for(let i = 0; i < providerKeys.length; i++ ) {
       const curKey = providerKeys[i]
       const icon = document.querySelector('.icon-' + curKey)
@@ -389,6 +406,7 @@ export default class Embed {
       container.appendChild(embedHTML);
 
       this.setTopBorder('success')
+      this.setData('iframe')
       return false
     }
 
@@ -397,6 +415,7 @@ export default class Embed {
 
   /**
    * embed default content using embed.ly service
+   * turn into a tag: <a href="http://embed.ly" class="embedly-card">Embedly</a>
    *
    */
   embedDefaultContent(url) {
@@ -416,10 +435,10 @@ export default class Embed {
       console.log('loading done')
       this.containerLoading.style.display = "none"
       this.adder.style.display = 'none'
+      this.setData()
 
       this.setTopBorder('success')
     });
-    // <a href="http://embed.ly" class="embedly-card">Embedly</a>
   }
 
   isEmbeding() {
@@ -441,6 +460,8 @@ export default class Embed {
       this.addrProviderList.appendChild(this.makeProviderIconListDetails())
     }
 
+    this.lightenAllProviderIcons()
+    this.highlightCurrentProviderIcon()
     this.showProvidersDetail = !this.showProvidersDetail
   }
 
@@ -522,7 +543,9 @@ export default class Embed {
    * lighten all the provider icons
    * @param providerKeys, array of string
    */
-  lightenAllProviderIcons(providerKeys) {
+  lightenAllProviderIcons() {
+    const providerKeys = R.pluck('domain', PROVIDERS)
+
     for(let i = 0; i < providerKeys.length; i++ ) {
       const curKey = providerKeys[i]
       const icon = document.querySelector('.icon-' + curKey)
