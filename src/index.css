@@ -283,6 +283,15 @@
   }
 }
 
+.custom-setting-wrapper {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid;
+  border-bottom-color: #f0f1f5;
+  width: 100%;
+  padding-bottom: 3px;
+}
+
 @keyframes embed-preloader-spin {
   0% {
     transform: rotate(0deg);
