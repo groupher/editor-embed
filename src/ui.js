@@ -6,7 +6,7 @@ import 'tippy.js/themes/light.css';
 
 import PROVIDERS from './providers';
 import { parseDomain, loadJS, getQueryFromUrl } from './utils'
-import { customIframeFragment, CUSTOM_PROVIDERS  } from './custom_embeds'
+import { customIframeFragment, CUSTOM_PROVIDERS, PROVIDER_ANCHORS  } from './custom_embeds'
 
 const tooltipHideAll = hideAll
 
@@ -269,7 +269,7 @@ export default class Ui {
   }
 
   /**
-   * Render valid service icon list
+   * Render valid service icon list in digest view
    *
    * @return {HTMLElement}
    */
@@ -282,14 +282,11 @@ export default class Ui {
         src: provider.icon,
       })
 
-      tippy(Icon, this.makeProviderCard(provider))
-
+      tippy(Icon, this.providerPopoverCard(provider))
       addrIconWrapper.appendChild(Icon)
 
-      if(provider.domain === 'jsfiddle' ||
-         provider.domain === 'infoq' ||
-         provider.domain === 'producthunt' ||
-         provider.domain === 'ted') {
+      // add divider if need
+      if(R.contains(provider.domain, PROVIDER_ANCHORS)) {
         const Divider= this._make("div", this.CSS.addrIconDivider)
         Divider.innerText = '/'
         addrIconWrapper.appendChild(Divider)
@@ -299,11 +296,16 @@ export default class Ui {
     return addrIconWrapper
   }
 
+  /**
+   * Render valid service icon list in details view
+   *
+   * @return {HTMLElement}
+   */
   makeProviderIconListDetails() {
     const typeList = R.keys(R.groupBy((provide) => provide.type, PROVIDERS))
-
     const ListWrapper = this._make("div", this.CSS.addrDetailWrapper);
 
+    // TODO:  add issue
     const FooterLink = this._make("a", this.CSS.addrFooterLink, {
       href: "https://github.com/",
       target: "_blank"
@@ -321,7 +323,7 @@ export default class Ui {
           src: provider.icon,
         })
 
-        tippy(Icon, this.makeProviderCard(provider))
+        tippy(Icon, this.providerPopoverCard(provider))
 
         AddrIconWrapper.appendChild(Icon)
       })
@@ -335,11 +337,11 @@ export default class Ui {
   }
 
   /**
-   * return tippy config
+   * return tippy config for each provider popover card
    * @param {HTMLElement}
    * @return {object}
    */
-  makeProviderCard(provider) {
+  providerPopoverCard(provider) {
     const Wrapper = this._make("div", this.CSS.providerCard)
     const Header = this._make("div", this.CSS.providerCardHeader)
     const Cover = this._make("img", this.CSS.providerCardCover, {
@@ -395,6 +397,9 @@ export default class Ui {
     }
   }
 
+  /**
+   * check is the card is embeding
+   */
   isEmbeding() {
     return this.containerLoading.style.display === "block" ? true : false
   }
@@ -419,6 +424,10 @@ export default class Ui {
     this.showProvidersDetail = !this.showProvidersDetail
   }
 
+  /**
+   * render default adder view, with inputer, site white list staff
+   * @return {HTMLElement}
+   */
   renderAdderView() {
     const container = this._make('div', this.CSS.container);
     this.adder = this._make('div', this.CSS.addrWrapper);
@@ -464,8 +473,8 @@ export default class Ui {
     return container
   }
 
-  // 当 settings 里的 edit 请求
-  changeToAdderViewer() {
+  // change view to adderView when edit button clicked in settings panel
+  changeToAdderView() {
     this.element.innerHTML = null
     console.log('this.element.classList: ', this.element.classList)
     this.element.classList = ''

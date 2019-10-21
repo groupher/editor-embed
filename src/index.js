@@ -117,6 +117,7 @@ export default class Embed {
    * @param {number} [data.width] - iframe width
    * @param {string} [data.caption] - caption
    */
+  // TODO:  validate with the whitelist
   // set data2(data) {
   //   if (!(data instanceof Object)) {
   //     throw Error('Embed Tool data should be object');
@@ -138,8 +139,7 @@ export default class Embed {
 
     //   this._data.caption = caption ? caption.innerHTML : '';
     // }
-
-    return this._data;
+    return this.ui.data;
   }
  
   /**
@@ -158,19 +158,15 @@ export default class Embed {
    * @return {Element}
    */
   renderSettings() {
-    console.log('renderSettings: ', this.data)
-    console.log('renderSettings _data: ', this._data)
-    
     if(R.isEmpty(this.data.provider)) return this._make('DIV', '')
 
     const Wrapper = this._make('DIV', [this.CSS.customSettingWrapper])
-
     const editIcon = this._make('DIV', [this.CSS.cdxSettingsButton], {
       title: '编辑',
     })
     editIcon.innerHTML = EditIcon
 
-    editIcon.addEventListener("click", () => this.ui.changeToAdderViewer())
+    editIcon.addEventListener("click", () => this.ui.changeToAdderView())
 
     const gotoIcon = this._make('a', [this.CSS.cdxSettingsButton], {
       title: '跳转到原站点',

@@ -1,7 +1,11 @@
 
 import { parseDomain } from './utils'
 
+// provider not using embedly service
 export const CUSTOM_PROVIDERS = ['amap', 'bilibili']
+
+// break points for provider digest view
+export const PROVIDER_ANCHORS = ['jsfiddle', 'infoq', 'producthunt', 'ted']
 
 /**
  * the provider that embedly can't parse or parse not right
