@@ -136,7 +136,13 @@ export default class Ui {
     this.containerLoading.style.display = "block"
     embedly('on', 'card.rendered', (iframe) => {
       // iframe is the card iframe that we used to render the event.
-      console.log('loading done')
+      console.log('loading done: ', iframe.contentWindow)
+      const doc = iframe.contentWindow
+      const imgSrc = doc.document.querySelector(".art-bd-img").src
+      console.log('got doc: ', imgSrc)
+      console.log('NOTE: 图片地址是 embedly 缓存地址')
+      console.log('TODO: 上传到云 oss 作为预览图片')
+
       this.containerLoading.style.display = "none"
       this.adder.style.display = 'none'
 
