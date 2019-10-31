@@ -58,7 +58,7 @@ export default class Embed {
     this.addrProviderList = null
     this.addrProviderToggler = null
 
-    loadJS(embedlyScript, null, document.body);
+    loadJS(embedlyScript, this.embedlyOnload, document.body);
     loadJS(ramdaScript, null, document.body)
 
     /**
@@ -69,6 +69,19 @@ export default class Embed {
       config: this.config,
       setData: this.setData,
       data: this._data
+    });
+  }
+  
+  /**
+   * embedly service
+   * should set api key in here
+   * 
+   */
+  embedlyOnload() {
+    embedly("defaults", {
+      cards: {
+        key: window.localStorage.getItem("embedlykey"),
+      }
     });
   }
 

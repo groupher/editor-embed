@@ -125,7 +125,6 @@ export default class Ui {
   embedDefaultContent(url) {
     const embedHTML = this._make('a', 'embedly-card', {
       href: url,
-      "data-card-controls": 0
     })
 
     // embedHTML.dataset["card-controls"] = 0
