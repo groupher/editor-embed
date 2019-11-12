@@ -6,7 +6,7 @@ import 'tippy.js/themes/light.css';
 
 import PROVIDERS from './providers';
 import { parseDomain, loadJS, getQueryFromUrl } from './utils'
-import { customIframeFragment, CUSTOM_PROVIDERS, PROVIDER_ANCHORS  } from './custom_embeds'
+import { customIframeFragment, CUSTOM_PROVIDERS, PROVIDER_ANCHORS } from './custom_embeds'
 
 const tooltipHideAll = hideAll
 
@@ -26,18 +26,20 @@ export default class Ui {
   get data() {
     return this._data;
   }
+
   /**
    * set saved data by type
+   * // TODO:  move data to index.js
    */
-  setData(type='embedly', value) {
+  setData(type = 'embedly', value) {
     // embedly or iframe
     console.log('setData called type: ', type)
     console.log('setData called value: ', value)
 
     this._data = {
       type,
-      provider: value || '',
-      value: value || '',
+      provider: encodeURI(value) || '',
+      value: encodeURI(value) || '',
     };
   }
 
@@ -99,9 +101,9 @@ export default class Ui {
     this.element.classList.add(this.CSS.container)
     this.element.appendChild(this.containerLoading)
 
-    if(R.contains(domain, CUSTOM_PROVIDERS)) {
+    if (R.contains(domain, CUSTOM_PROVIDERS)) {
       const { html } = customIframeFragment(value)
-      embedHTML.innerHTML =  html
+      embedHTML.innerHTML = html
 
       console.log('addrInputConfirmHandler this.element: ', this.element)
       this.element.appendChild(embedHTML);
@@ -124,7 +126,7 @@ export default class Ui {
    */
   embedDefaultContent(url) {
     const embedHTML = this._make('a', 'embedly-card', {
-      href: url,
+      href: encodeURI(url),
       "data-card-controls": 0
     })
 
@@ -162,7 +164,7 @@ export default class Ui {
     this.element.classList.remove('embed-top-error')
     this.element.classList.remove('embed-top-default')
 
-    switch(type) {
+    switch (type) {
       case 'success': {
         return this.element.classList.add('embed-top-success')
       }
@@ -187,7 +189,7 @@ export default class Ui {
     const providerKeys = R.pluck('domain', PROVIDERS)
     const domain = parseDomain(value)
 
-    if(value.trim() === "") {
+    if (value.trim() === "") {
       this.hideConfirmBtn()
       // lighten all the icons
       this.lightenAllProviderIcons()
@@ -232,7 +234,7 @@ export default class Ui {
     const domain = parseDomain(value)
 
     // highlight the current provider icon for current domain
-    for(let i = 0; i < providerKeys.length; i++ ) {
+    for (let i = 0; i < providerKeys.length; i++) {
       const curKey = providerKeys[i]
       // TODO:  潜在 bug
       const icon = document.querySelector('.icon-' + curKey)
@@ -246,10 +248,10 @@ export default class Ui {
    * @param icon, HTMLElement
    * @param type, string, on | off
    */
-  setIcon(icon, type="on") {
-    if(!icon) return false
+  setIcon(icon, type = "on") {
+    if (!icon) return false
 
-    if(type === "on") {
+    if (type === "on") {
       icon.style.opacity = 1
       icon.style.filter = "grayscale(0)"
     } else {
@@ -265,7 +267,7 @@ export default class Ui {
   lightenAllProviderIcons() {
     const providerKeys = R.pluck('domain', PROVIDERS)
 
-    for(let i = 0; i < providerKeys.length; i++ ) {
+    for (let i = 0; i < providerKeys.length; i++) {
       const curKey = providerKeys[i]
       // TODO:  maybe 隐患
       const icon = document.querySelector('.icon-' + curKey)
@@ -284,7 +286,7 @@ export default class Ui {
     const providers = R.filter(provider => provider.showInBrief, PROVIDERS)
 
     providers.forEach(provider => {
-      const Icon= this._make("img", [this.CSS.addrIcon, 'icon-' + provider.domain], {
+      const Icon = this._make("img", [this.CSS.addrIcon, 'icon-' + provider.domain], {
         src: provider.icon,
       })
 
@@ -292,8 +294,8 @@ export default class Ui {
       addrIconWrapper.appendChild(Icon)
 
       // add divider if need
-      if(R.contains(provider.domain, PROVIDER_ANCHORS)) {
-        const Divider= this._make("div", this.CSS.addrIconDivider)
+      if (R.contains(provider.domain, PROVIDER_ANCHORS)) {
+        const Divider = this._make("div", this.CSS.addrIconDivider)
         Divider.innerText = '/'
         addrIconWrapper.appendChild(Divider)
       }
@@ -325,7 +327,7 @@ export default class Ui {
 
       const AddrIconWrapper = this._make("div", this.CSS.addrDetailIconWrapper);
       curProviders.forEach(provider => {
-        const Icon= this._make("img", [this.CSS.addrDetailIcon, 'icon-' + provider.domain], {
+        const Icon = this._make("img", [this.CSS.addrDetailIcon, 'icon-' + provider.domain], {
           src: provider.icon,
         })
 
@@ -368,7 +370,7 @@ export default class Ui {
     InsertBtn.innerText = "插入示例"
 
     InsertBtn.addEventListener('click', () => {
-      if(this.isEmbeding()) return false
+      if (this.isEmbeding()) return false
 
       this.addrInput.value = provider.demoEmbedLink
       this.addrInputHandler()
@@ -415,7 +417,7 @@ export default class Ui {
    *
    */
   handleProviderToggle() {
-    if(this.showProvidersDetail) {
+    if (this.showProvidersDetail) {
       this.addrProviderToggler.innerText = "展开全部"
       this.addrProviderList.innerHTML = null
       this.addrProviderList.appendChild(this.makeProviderIconList())
@@ -444,7 +446,7 @@ export default class Ui {
     this.containerLoading = this._make('div', this.CSS.containerLoading);
 
     this.addrDescWrapper = this._make('div', this.CSS.addrDescWrapper);
-    const addrDescHeader= this._make('div', this.CSS.addrDescHeader);
+    const addrDescHeader = this._make('div', this.CSS.addrDescHeader);
     const addrDesc = this._make('div', this.CSS.addrDesc);
 
     this.addrProviderToggler = this._make('div', this.CSS.addrProviderToggler);
@@ -492,7 +494,7 @@ export default class Ui {
     this.addrInput.value = this.data.provider
     this.addrInputHandler()
   }
-  
+
   /**
    * Helper method for elements creation
    * @param tagName

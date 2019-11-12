@@ -44,7 +44,7 @@ export default class Embed {
    *   config - user config for Tool
    *   api - Editor.js API
    */
-  constructor({data, api}) {
+  constructor({ data, api }) {
     this.api = api;
     this._data = {};
     this.element = null;
@@ -141,7 +141,7 @@ export default class Embed {
     // }
     return this.ui.data;
   }
- 
+
   /**
    * Render Embed tool content
    *
@@ -158,7 +158,7 @@ export default class Embed {
    * @return {Element}
    */
   renderSettings() {
-    if(R.isEmpty(this.data.provider)) return this._make('DIV', '')
+    if (R.isEmpty(this.data.provider)) return this._make('DIV', '')
 
     const Wrapper = this._make('DIV', [this.CSS.customSettingWrapper])
     const editIcon = this._make('DIV', [this.CSS.cdxSettingsButton], {
@@ -180,7 +180,6 @@ export default class Embed {
 
     return Wrapper
   }
-
 
   /**
    * Helper method for elements creation
