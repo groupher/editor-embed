@@ -49,8 +49,10 @@ const TedIcon = ASSET_BASE + 'ted.png'
 const EggheadIcon = ASSET_BASE + 'egghead.png'
 const XiaozhuanlanIcon = ASSET_BASE + 'xiaozhuanlan.png'
 
+// 其他
 const GaodeIcon = ASSET_BASE + 'gaode.png'
 const GfycatIcon = ASSET_BASE + 'gfycat.png'
+const WikipediaIcon = ASSET_BASE + 'wikipedia.png'
 
 
 export default [
@@ -378,7 +380,7 @@ export default [
     type: "教程类",
   },
 
-  // 其他类
+  // 其他
   {
     domain: 'amap',
     icon: GaodeIcon,
@@ -399,5 +401,16 @@ export default [
     type: "其他",
     showInBrief: true
   },
+  {
+    domain: 'wikipedia',
+    icon: WikipediaIcon,
+    title: "wikipedia",
+    link: "https://wikipedia.org/",
+    desc: "支持嵌入各种 wiki 内容",
+    demoEmbedLink: "https://zh.wikipedia.org/wiki/Linux",
+    type: "其他",
+    // showInBrief: true
+  },
+
   // 应该还有 教程类 等等
 ]

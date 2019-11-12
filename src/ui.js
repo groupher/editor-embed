@@ -11,36 +11,15 @@ import { customIframeFragment, CUSTOM_PROVIDERS, PROVIDER_ANCHORS } from './cust
 const tooltipHideAll = hideAll
 
 export default class Ui {
-  constructor({ api, config }) {
+  constructor({ api, data, config, setData }) {
     this.api = api
     this.i18n = config.i18n || 'en'
     this.config = config
 
-    this._data = {}
+    this.data = data
+    this.setData = setData
+
     this.element = null;
-  }
-
-  /**
-   * @return {EmbedData}
-   */
-  get data() {
-    return this._data;
-  }
-
-  /**
-   * set saved data by type
-   * // TODO:  move data to index.js
-   */
-  setData(type = 'embedly', value) {
-    // embedly or iframe
-    console.log('setData called type: ', type)
-    console.log('setData called value: ', value)
-
-    this._data = {
-      type,
-      provider: encodeURI(value) || '',
-      value: encodeURI(value) || '',
-    };
   }
 
   /**

@@ -46,7 +46,13 @@ export default class Embed {
    */
   constructor({ data, api }) {
     this.api = api;
-    this._data = {};
+
+    this._data = {
+      type: data.type || 'embedly',
+      provider: data.provider || '',
+      value: data.value || '',
+    };
+
     this.element = null;
     this.config = {}
 
@@ -72,6 +78,21 @@ export default class Embed {
     });
   }
   
+  /**
+   * set saved data by type
+   */
+  setData(type = 'embedly', value) {
+    // embedly or iframe
+    console.log('setData called type: ', type)
+    console.log('setData called value: ', value)
+
+    this._data = {
+      type,
+      provider: encodeURI(value) || '',
+      value: encodeURI(value) || '',
+    };
+  }
+
   /**
    * embedly service
    * should set api key in here
@@ -102,7 +123,8 @@ export default class Embed {
    * @return {EmbedData}
    */
   save() {
-    return this.ui.data;
+    // return Object.assign(this.data, {});
+    return this._data;
   }
 
   /**
