@@ -1,6 +1,10 @@
 {
   "name": "@groupher/editor-embed",
+<<<<<<< HEAD
   "version": "1.0.9",
+=======
+  "version": "1.0.12",
+>>>>>>> a1d6e7f18addb4ab9c2d96700d893284c2662ea7
   "keywords": [
     "codex editor",
     "embed",
