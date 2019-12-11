@@ -193,6 +193,8 @@ export default class Embed {
    * @return {Element}
    */
   renderSettings() {
+    console.log("renderSettings this.data: ", this.data.provider)
+
     if (R.isEmpty(this.data.provider)) return this._make('DIV', '')
 
     const Wrapper = this._make('DIV', [this.CSS.customSettingWrapper])

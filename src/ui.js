@@ -71,9 +71,9 @@ export default class Ui {
    *
    */
   addrInputConfirmHandler() {
-    const { value } = this.addrInput
-    const domain = parseDomain(value)
+    const { value: curUrl } = this.addrInput
 
+    const domain = parseDomain(curUrl)
     const embedHTML = this._make('div', '')
 
     this.element.innerHTML = null
@@ -81,21 +81,24 @@ export default class Ui {
     this.element.appendChild(this.containerLoading)
 
     if (R.contains(domain, CUSTOM_PROVIDERS)) {
-      const { html } = customIframeFragment(value)
+
+      const { valid, html, fid } = customIframeFragment(curUrl)
+      if(!valid) return console.log("TODO:  red alert UI")
       embedHTML.innerHTML = html
 
-      console.log('addrInputConfirmHandler this.element: ', this.element)
+      setTimeout(() => {
+        console.log("custom embeds loaded: ")
+      }, 1000)
+
       this.element.appendChild(embedHTML);
 
       this.setTopBorder('success')
-
-      const { value } = this.addrInput
-      this.setData('iframe', value)
+      this.setData('iframe', curUrl)
 
       return false
     }
 
-    return this.embedDefaultContent(value)
+    return this.embedDefaultContent(curUrl)
   }
 
   /**
@@ -120,6 +123,8 @@ export default class Ui {
       setTimeout(() => {
         console.log('loading done: ', iframe.contentWindow)
         const doc = iframe.contentWindow
+        // TODO:  有些没有图片，而且只需要解析出视频网站的信息就可以了
+
         const imgSrc = doc.document.querySelector(".art-bd-img").src
         console.log('got doc: ', imgSrc)
         console.log('NOTE: 图片地址是 embedly 缓存地址')
