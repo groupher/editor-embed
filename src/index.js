@@ -183,7 +183,11 @@ export default class Embed {
    * @return {HTMLElement}
    */
   render() {
-    return this.ui.renderAdderView()
+    const wrapper = this._make('div', ['padding30'])
+
+    wrapper.appendChild(this.ui.renderAdderView())
+
+    return wrapper
   }
 
   /**
