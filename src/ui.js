@@ -476,16 +476,15 @@ export default class Ui {
   }
 
   // change view to adderView when edit button clicked in settings panel
-  changeToAdderView() {
+  // if value passed, it means edit mode
+  changeToAdderView(provider) {
     this.element.innerHTML = null
-    console.log('this.element.classList: ', this.element.classList)
     this.element.classList = ''
-    console.log('before this.element: ', this.element)
 
     this.element.appendChild(this.renderAdderView())
     // this.element.replaceWith(this.renderAdderView())
     // this.element = this.renderAdderView()
-    this.addrInput.value = this.data.provider
+    this.addrInput.value = provider || this.data.provider
     this.addrInputHandler()
   }
 

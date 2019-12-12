@@ -73,7 +73,7 @@ export default class Embed {
     this.ui = new Ui({
       api,
       config: this.config,
-      setData: this.setData,
+      setData: this.setData.bind(this),
       data: this._data
     });
   }
@@ -83,9 +83,6 @@ export default class Embed {
    */
   setData(type = 'embedly', value) {
     // embedly or iframe
-    console.log('setData called type: ', type)
-    console.log('setData called value: ', value)
-
     this._data = {
       type,
       provider: encodeURI(value) || '',
@@ -153,19 +150,6 @@ export default class Embed {
    * @param {number} [data.width] - iframe width
    * @param {string} [data.caption] - caption
    */
-  // TODO:  validate with the whitelist
-  // set data2(data) {
-  //   if (!(data instanceof Object)) {
-  //     throw Error('Embed Tool data should be object');
-  //   }
-
-  //   this._data = {
-  //     type: 'embedly',
-  //     provider: this.addrInput ? this.addrInput.value : '',
-  //     value: this.addrInput ? this.addrInput.value : '',
-  //   };
-  // }
-
   /**
    * @return {EmbedData}
    */
@@ -198,22 +182,24 @@ export default class Embed {
    * @return {Element}
    */
   renderSettings() {
-    console.log("renderSettings this.data: ", this.data.provider)
-
-    if (R.isEmpty(this.data.provider)) return this._make('DIV', '')
+    const { provider } = this._data
+    if (R.isEmpty(provider)) return this._make('DIV', '')
 
     const Wrapper = this._make('DIV', [this.CSS.customSettingWrapper])
     const editIcon = this._make('DIV', [this.CSS.cdxSettingsButton], {
-      title: '编辑',
+      title: '重新编辑',
     })
     editIcon.innerHTML = EditIcon
 
-    editIcon.addEventListener("click", () => this.ui.changeToAdderView())
+    editIcon.addEventListener("click", () => {
+      this.ui.changeToAdderView(provider)
+      this.api.toolbar.close()
+    })
 
     const gotoIcon = this._make('a', [this.CSS.cdxSettingsButton], {
       title: '跳转到原站点',
       target: '_blank',
-      href: this.data.provider,
+      href: provider,
     })
     gotoIcon.innerHTML = GotoIcon
 
