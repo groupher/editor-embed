@@ -1,7 +1,8 @@
 .embed-top-success {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  border-top: 3px solid #2aa198;
+  border-top: 1px solid !important;
+  border-top-color: #b3b3b3 !important;
 }
 
 .embed-top-error {
@@ -15,7 +16,24 @@
   border-color: #e4e4e4;
 }
 
+.embed-clip {
+  position: absolute;
+  top: -15px;
+  right: 8%;
+  width: 30px;
+  height: 30px;
+}
+
+.embed-clip svg {
+  fill: #b3b3b3;
+}
+
+.embed-tool-wrapper {
+  padding: 30px 10px;
+}
+
 .embed-tool {
+  position: relative;
   border: 1px solid;
   border-color: #e4e4e4;
   border-radius: 10px;

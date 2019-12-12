@@ -4,6 +4,8 @@ import tippy, { hideAll } from 'tippy.js'
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 
+import ClipIcon from './icon/clip.svg'
+
 import PROVIDERS from './providers';
 import { parseDomain, loadJS, getQueryFromUrl } from './utils'
 import { customIframeFragment, CUSTOM_PROVIDERS, PROVIDER_ANCHORS } from './custom_embeds'
@@ -36,6 +38,7 @@ export default class Ui {
       caption: 'embed-tool__caption',
       url: 'embed-tool__url',
       content: 'embed-tool__content',
+      clip: 'embed-clip',
       // add
       addrWrapper: 'embed-tool__addrwrapper',
       addrInputWrapper: 'embed-tool__addrwrapper-inputwrapper',
@@ -152,6 +155,11 @@ export default class Ui {
 
     switch (type) {
       case 'success': {
+        const clipIconEl = this._make('div', [this.CSS.clip], {
+          innerHTML: ClipIcon
+        })
+    
+        this.element.appendChild(clipIconEl)
         return this.element.classList.add('embed-top-success')
       }
       case 'error': {

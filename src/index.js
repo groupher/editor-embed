@@ -112,6 +112,7 @@ export default class Embed {
    */
   get CSS() {
     return {
+      wrapper: 'embed-tool-wrapper',
       customSettingWrapper: 'custom-setting-wrapper',
       cdxSettingsButton: 'cdx-settings-button'
     };
@@ -183,7 +184,7 @@ export default class Embed {
    * @return {HTMLElement}
    */
   render() {
-    const wrapper = this._make('div', ['padding30'])
+    const wrapper = this._make('div', [this.CSS.wrapper])
 
     wrapper.appendChild(this.ui.renderAdderView())
 
