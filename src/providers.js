@@ -1,63 +1,63 @@
 // 开发类
 // or you can import like this:
 // import ArchdailyIcon from './icon/archdaily.png'
-const ASSET_BASE = 'https://cps-oss.oss-cn-shanghai.aliyuncs.com/embeds/'
+const ASSET_BASE =
+  "https://cps-oss.oss-cn-shanghai.aliyuncs.com/editor/embeds/";
 
-const GithubIcon = ASSET_BASE + 'github.png'
-const ReplitIcon = ASSET_BASE + 'replit.png'
-const CodepenIcon = ASSET_BASE + 'codepen.png'
-const CodesandboxIcon =  ASSET_BASE + 'codesandbox.png'
-const JsfiddleIcon = ASSET_BASE + 'jsfiddle.png'
-const VscodeIcon = ASSET_BASE + 'vscode.png'
+const GithubIcon = ASSET_BASE + "github.png";
+const ReplitIcon = ASSET_BASE + "replit.png";
+const CodepenIcon = ASSET_BASE + "codepen.png";
+const CodesandboxIcon = ASSET_BASE + "codesandbox.png";
+const JsfiddleIcon = ASSET_BASE + "jsfiddle.png";
+const VscodeIcon = ASSET_BASE + "vscode.png";
 
-const FlaticonIcon = ASSET_BASE + 'flaticon.png'
+const FlaticonIcon = ASSET_BASE + "flaticon.png";
 
 // 资讯类
-const TechcrunchIcon = ASSET_BASE + 'techcrunch.png'
-const V2exIcon = ASSET_BASE + 'v2ex.png'
-const JuejinIcon = ASSET_BASE + 'juejin.png'
-const IfanrIcon = ASSET_BASE + 'ifanr.png'
-const InfoQIcon = ASSET_BASE + 'infoq.png'
-const ShaoshupaiIcon = ASSET_BASE + 'shaoshupai.png'
-const ZhihuIcon = ASSET_BASE + 'zhihu.png'
+const TechcrunchIcon = ASSET_BASE + "techcrunch.png";
+const V2exIcon = ASSET_BASE + "v2ex.png";
+const JuejinIcon = ASSET_BASE + "juejin.png";
+const IfanrIcon = ASSET_BASE + "ifanr.png";
+const InfoQIcon = ASSET_BASE + "infoq.png";
+const ShaoshupaiIcon = ASSET_BASE + "shaoshupai.png";
+const ZhihuIcon = ASSET_BASE + "zhihu.png";
 
-const MediumIcon = ASSET_BASE + 'medium.png'
-const OschinaIcon = ASSET_BASE + 'oschina.png'
-const CnblogsIcon = ASSET_BASE + 'cnblogs.png'
-const JianshuIcon = ASSET_BASE + 'jianshu.png'
-const SegmentfaultIcon = ASSET_BASE + 'segmentfault.png'
-const WoshipmIcon = ASSET_BASE + 'woshipm.png'
+const MediumIcon = ASSET_BASE + "medium.png";
+const OschinaIcon = ASSET_BASE + "oschina.png";
+const CnblogsIcon = ASSET_BASE + "cnblogs.png";
+const JianshuIcon = ASSET_BASE + "jianshu.png";
+const SegmentfaultIcon = ASSET_BASE + "segmentfault.png";
+const WoshipmIcon = ASSET_BASE + "woshipm.png";
 
 // 设计类
-const DribbleIcon = ASSET_BASE + 'dribble.png'
-const MuzliIcon = ASSET_BASE + 'muzli.png'
-const ColossalIcon = ASSET_BASE + 'thisiscolossal.png'
-const InvisionappIcon = ASSET_BASE + 'invisionapp.png'
-const ZcoolIcon = ASSET_BASE + 'zcool.jpeg'
-const ArchdailyIcon = ASSET_BASE + 'archdaily.png'
-const CodropsIcon = ASSET_BASE + 'codrops.png'
-const CssdesignawardsIcon = ASSET_BASE + 'cssdesignawards.png'
+const DribbleIcon = ASSET_BASE + "dribble.png";
+const MuzliIcon = ASSET_BASE + "muzli.png";
+const ColossalIcon = ASSET_BASE + "thisiscolossal.png";
+const InvisionappIcon = ASSET_BASE + "invisionapp.png";
+const ZcoolIcon = ASSET_BASE + "zcool.jpeg";
+const ArchdailyIcon = ASSET_BASE + "archdaily.png";
+const CodropsIcon = ASSET_BASE + "codrops.png";
+const CssdesignawardsIcon = ASSET_BASE + "cssdesignawards.png";
 
-const ProducthuntIcon = ASSET_BASE + 'producthunt.png'
+const ProducthuntIcon = ASSET_BASE + "producthunt.png";
 
 // 视频类
-const BiliBiliIcon = ASSET_BASE + 'bilibili.png'
-const YoutubeIcon = ASSET_BASE + 'youtube.png'
-const TedIcon = ASSET_BASE + 'ted.png'
+const BiliBiliIcon = ASSET_BASE + "bilibili.png";
+const YoutubeIcon = ASSET_BASE + "youtube.png";
+const TedIcon = ASSET_BASE + "ted.png";
 
 // 教程类
-const EggheadIcon = ASSET_BASE + 'egghead.png'
-const XiaozhuanlanIcon = ASSET_BASE + 'xiaozhuanlan.png'
+const EggheadIcon = ASSET_BASE + "egghead.png";
+const XiaozhuanlanIcon = ASSET_BASE + "xiaozhuanlan.png";
 
 // 其他
-const GaodeIcon = ASSET_BASE + 'gaode.png'
-const GfycatIcon = ASSET_BASE + 'gfycat.png'
-const WikipediaIcon = ASSET_BASE + 'wikipedia.png'
-
+const GaodeIcon = ASSET_BASE + "gaode.png";
+const GfycatIcon = ASSET_BASE + "gfycat.png";
+const WikipediaIcon = ASSET_BASE + "wikipedia.png";
 
 export default [
   {
-    domain: 'github',
+    domain: "github",
     icon: GithubIcon,
     title: "github",
     link: "https://github.com",
@@ -65,9 +65,9 @@ export default [
     demoEmbedLink: "https://github.com/coderplanets",
     type: "开发类",
     showInBrief: true
-  }, 
+  },
   {
-    domain: 'repl',
+    domain: "repl",
     icon: ReplitIcon,
     title: "replit",
     link: "https://repl.it",
@@ -75,9 +75,9 @@ export default [
     demoEmbedLink: "https://repl.it/repls/AchingGreatHypertalk",
     type: "开发类",
     showInBrief: true
-  }, 
+  },
   {
-    domain: 'codepen',
+    domain: "codepen",
     icon: CodepenIcon,
     title: "codepen",
     link: "https://codepen.io",
@@ -85,9 +85,9 @@ export default [
     demoEmbedLink: "https://codepen.io/team/codepen/pen/qgJdQw",
     type: "开发类",
     showInBrief: true
-  }, 
+  },
   {
-    domain: 'codesandbox',
+    domain: "codesandbox",
     icon: CodesandboxIcon,
     title: "codesandbox",
     link: "https://codesandbox.io",
@@ -96,8 +96,8 @@ export default [
     type: "开发类",
     showInBrief: true
   },
-  { 
-    domain: 'jsfiddle',
+  {
+    domain: "jsfiddle",
     icon: JsfiddleIcon,
     title: "jsfiddle",
     link: "https://jsfiddle.net/",
@@ -106,28 +106,31 @@ export default [
     type: "开发类",
     showInBrief: true
   },
-  { 
-    domain: 'visualstudio',
+  {
+    domain: "visualstudio",
     icon: VscodeIcon,
     title: "visualstudio",
     link: "https://marketplace.visualstudio.com",
     desc: "支持嵌入 vsc 系列的各种工具，插件等 ",
-    demoEmbedLink: "https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode",
-    type: "开发类",
+    demoEmbedLink:
+      "https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode",
+    type: "开发类"
   },
   // 资讯类
-  { 
-    domain: 'medium',
-    icon: MediumIcon ,
+  {
+    domain: "medium",
+    icon: MediumIcon,
     title: "medium",
     link: "https://medium.com",
-    desc: "支持嵌入站内各种文章等, 使用 medium 搭建的博客可能无法解析，请提交 issue 支持",
-    demoEmbedLink: "https://medium.com/free-code-camp/how-to-write-a-super-fast-link-shortener-with-elixir-phoenix-and-mnesia-70ffa1564b3c",
+    desc:
+      "支持嵌入站内各种文章等, 使用 medium 搭建的博客可能无法解析，请提交 issue 支持",
+    demoEmbedLink:
+      "https://medium.com/free-code-camp/how-to-write-a-super-fast-link-shortener-with-elixir-phoenix-and-mnesia-70ffa1564b3c",
     type: "资讯类",
     showInBrief: true
   },
-  { 
-    domain: 'zhihu',
+  {
+    domain: "zhihu",
     icon: ZhihuIcon,
     title: "知乎",
     link: "https://zhihu.com",
@@ -136,53 +139,54 @@ export default [
     type: "资讯类",
     showInBrief: true
   },
-  { 
-    domain: 'oschina',
-    icon: OschinaIcon ,
+  {
+    domain: "oschina",
+    icon: OschinaIcon,
     title: "开源中国",
     link: "https://oschina.net",
     desc: "支持嵌入 oschina 域下的各种内容",
-    demoEmbedLink: "https://www.oschina.net/translate/a-guide-to-optimistic-locking",
-    type: "资讯类",
-  }, 
-  { 
-    domain: 'cnblogs',
+    demoEmbedLink:
+      "https://www.oschina.net/translate/a-guide-to-optimistic-locking",
+    type: "资讯类"
+  },
+  {
+    domain: "cnblogs",
     icon: CnblogsIcon,
     title: "博客园",
     link: "https://cnblogs.com",
     desc: "支持嵌入 cnblogs 域下的各种内容",
     demoEmbedLink: "https://www.cnblogs.com/smallSevens/p/11691432.html",
-    type: "资讯类",
-  }, 
-  { 
-    domain: 'jianshu',
+    type: "资讯类"
+  },
+  {
+    domain: "jianshu",
     icon: JianshuIcon,
-    title: '简书',
+    title: "简书",
     link: "https://jianshu.com",
     desc: "支持嵌入 jianshu 域下的各种内容",
     demoEmbedLink: "https://www.jianshu.com/p/b7ec14a67a06",
-    type: "资讯类",
-  }, 
-  { 
-    domain: 'segmentfault',
+    type: "资讯类"
+  },
+  {
+    domain: "segmentfault",
     icon: SegmentfaultIcon,
-    title: '思否',
+    title: "思否",
     link: "https://segmentfault.com",
     desc: "支持嵌入 segmentfault 域下的各种内容",
     demoEmbedLink: "https://segmentfault.com/a/1190000020716933",
-    type: "资讯类",
-  }, 
-  { 
-    domain: 'woshipm',
+    type: "资讯类"
+  },
+  {
+    domain: "woshipm",
     icon: WoshipmIcon,
-    title: '人人都是产品经理',
+    title: "人人都是产品经理",
     link: "http://www.woshipm.com/",
     desc: "支持嵌入站内的各种内容",
     demoEmbedLink: "http://www.woshipm.com/pd/2938314.html",
-    type: "资讯类",
+    type: "资讯类"
   },
-  { 
-    domain: 'v2ex',
+  {
+    domain: "v2ex",
     icon: V2exIcon,
     title: "v站 (v2ex)",
     link: "https://v2ex.com",
@@ -191,27 +195,28 @@ export default [
     type: "资讯类",
     showInBrief: true
   },
-  { 
-    domain: 'techcrunch',
+  {
+    domain: "techcrunch",
     icon: TechcrunchIcon,
     title: "techcrunch(中文)",
     link: "https://techcrunch.cn",
     desc: "支持嵌入站内文章，新闻等",
-    demoEmbedLink: "https://techcrunch.cn/2019/09/25/boston-dynamics-puts-its-robotic-quadruped-spot-up-for-sale/",
+    demoEmbedLink:
+      "https://techcrunch.cn/2019/09/25/boston-dynamics-puts-its-robotic-quadruped-spot-up-for-sale/",
     type: "资讯类",
     showInBrief: true
   },
-  { 
-    domain: 'juejin',
+  {
+    domain: "juejin",
     icon: JuejinIcon,
     title: "掘金",
     link: "https://juejin.im",
     desc: "支持嵌入文章，用户主页等",
     demoEmbedLink: "https://juejin.im/post/5d940e995188254463385ed4",
-    type: "资讯类",
+    type: "资讯类"
   },
-  { 
-    domain: 'infoq',
+  {
+    domain: "infoq",
     icon: InfoQIcon,
     title: "InfoQ(中国)",
     link: "https://www.infoq.cn/",
@@ -220,65 +225,68 @@ export default [
     type: "资讯类",
     showInBrief: true
   },
-  { 
-    domain: 'ifanr',
+  {
+    domain: "ifanr",
     icon: IfanrIcon,
     title: "ifanr",
     link: "https://www.ifanr.com",
     desc: "支持嵌入文章，介绍等",
     demoEmbedLink: "https://www.ifanr.com/1266218",
-    type: "资讯类",
+    type: "资讯类"
   },
-  { 
-    domain: 'sspai',
+  {
+    domain: "sspai",
     icon: ShaoshupaiIcon,
     title: "少数派",
     link: "https://sspai.com/",
     desc: "支持嵌入文章，介绍等",
     demoEmbedLink: "https://sspai.com/post/56836",
-    type: "资讯类",
+    type: "资讯类"
   },
 
   // 设计类
   {
-    domain: 'dribbble',
+    domain: "dribbble",
     icon: DribbleIcon,
     title: "dribbble",
     link: "https://dribbble.com",
     desc: "支持嵌入shots, designers 等各种内容",
-    demoEmbedLink: "https://dribbble.com/shots/7184722-Assembly-Payments-Homepage-Animation",
+    demoEmbedLink:
+      "https://dribbble.com/shots/7184722-Assembly-Payments-Homepage-Animation",
     type: "设计类",
     showInBrief: true
   },
   {
-    domain: 'muz',
+    domain: "muz",
     icon: MuzliIcon,
     title: "muzli",
     link: "https://medium.muz.li/",
     desc: "支持嵌入站内各种内容",
-    demoEmbedLink: "https://medium.muz.li/63-beautiful-dark-ui-examples-design-inspiration-8abaa1b86969",
-    type: "设计类",
+    demoEmbedLink:
+      "https://medium.muz.li/63-beautiful-dark-ui-examples-design-inspiration-8abaa1b86969",
+    type: "设计类"
   },
   {
-    domain: 'invisionapp',
+    domain: "invisionapp",
     icon: InvisionappIcon,
     title: "invision",
     link: "https://www.invisionapp.com/",
     desc: "支持嵌入站内各种内容",
-    demoEmbedLink: "https://www.invisionapp.com/inside-design/top-5-design-resources/",
-    type: "设计类",
+    demoEmbedLink:
+      "https://www.invisionapp.com/inside-design/top-5-design-resources/",
+    type: "设计类"
   },
   {
-    domain: 'thisiscolossal',
+    domain: "thisiscolossal",
     icon: ColossalIcon,
     title: "colossal",
     link: "https://www.thisiscolossal.com",
     desc: "支持嵌入站内各种内容",
     demoEmbedLink: "https://www.thisiscolossal.com",
-    type: "设计类",
+    type: "设计类"
   },
   {
-    domain: 'zcool',
+    domain: "zcool",
     icon: ZcoolIcon,
     title: "站酷",
     link: "https://www.zcool.com.cn/",
@@ -288,39 +296,42 @@ export default [
     showInBrief: true
   },
   {
-    domain: 'archdaily',
+    domain: "archdaily",
     icon: ArchdailyIcon,
     title: "archdaily",
     link: "https://www.archdaily.com",
     desc: "支持嵌入站内各种内容",
-    demoEmbedLink: "https://www.archdaily.cn/cn/926449/tai-guo-hun-yan-ting-aube-phtaa-living-design?ad_content=926449&ad_medium=widget&ad_name=featured_loop_main",
-    type: "设计类",
+    demoEmbedLink:
+      "https://www.archdaily.cn/cn/926449/tai-guo-hun-yan-ting-aube-phtaa-living-design?ad_content=926449&ad_medium=widget&ad_name=featured_loop_main",
+    type: "设计类"
   },
   {
-    domain: 'tympanus',
+    domain: "tympanus",
     icon: CodropsIcon,
     title: "codrops",
     link: "https://tympanus.net/codrops",
     desc: "支持嵌入站内各种内容",
-    demoEmbedLink: "https://tympanus.net/codrops/2019/10/16/case-study-chang-liu-portfolio-v4/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+tympanus+%28Codrops%29",
-    type: "设计类",
-  }, 
+    demoEmbedLink:
+      "https://tympanus.net/codrops/2019/10/16/case-study-chang-liu-portfolio-v4/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+tympanus+%28Codrops%29",
+    type: "设计类"
+  },
   {
-    domain: 'cssdesignawards',
+    domain: "cssdesignawards",
     icon: CssdesignawardsIcon,
     title: "cssdesignawards",
     link: "https://www.cssdesignawards.com/",
     desc: "支持嵌入站内各种内容",
     demoEmbedLink: "https://www.cssdesignawards.com/sites/vostokcement/35973",
-    type: "设计类",
-  }, 
+    type: "设计类"
+  },
   {
-    domain: 'producthunt',
+    domain: "producthunt",
     icon: ProducthuntIcon,
     title: "producthunt",
     link: "https://www.producthunt.com",
     desc: "支持嵌入各种项目介绍等",
-    demoEmbedLink: "https://www.producthunt.com/posts/ink-1c962f43-e6e2-4291-942f-6090712bf2b6",
+    demoEmbedLink:
+      "https://www.producthunt.com/posts/ink-1c962f43-e6e2-4291-942f-6090712bf2b6",
     type: "设计类",
     showInBrief: true
   },
@@ -329,18 +340,19 @@ export default [
 
   // 视频类
   {
-    domain: 'bilibili',
+    domain: "bilibili",
     icon: BiliBiliIcon,
     title: "b站（bilibili）",
     link: "https://www.bilibili.com/",
     desc: "支持嵌入站内各种视频，专栏，用户主页等",
-    demoEmbedLink: "https://www.bilibili.com/video/av45405879?from=search&seid=1413989416108416715",
+    demoEmbedLink:
+      "https://www.bilibili.com/video/av45405879?from=search&seid=1413989416108416715",
     type: "视频类",
     showInBrief: true
   },
 
   {
-    domain: 'youtube',
+    domain: "youtube",
     icon: YoutubeIcon,
     title: "youtube",
     link: "https:/youtube.com",
@@ -350,67 +362,70 @@ export default [
     showInBrief: true
   },
   {
-    domain: 'ted',
+    domain: "ted",
     icon: TedIcon,
     title: "ted",
     link: "https:/ted.com",
     desc: "支持嵌入站内各种 ted 视频等",
-    demoEmbedLink: "https://www.ted.com/talks/linus_torvalds_the_mind_behind_linux",
+    demoEmbedLink:
+      "https://www.ted.com/talks/linus_torvalds_the_mind_behind_linux",
     type: "视频类",
     showInBrief: true
   },
 
   // 教程类
   {
-    domain: 'egghead',
+    domain: "egghead",
     icon: EggheadIcon,
     title: "egghead",
     link: "https://egghead.io/",
     desc: "支持嵌入站内各种视频，文章等",
     demoEmbedLink: "https://egghead.io/lessons/react-build-react-from-source",
-    type: "教程类",
+    type: "教程类"
   },
   {
-    domain: 'xiaozhuanlan',
+    domain: "xiaozhuanlan",
     icon: XiaozhuanlanIcon,
     title: "小专栏",
     link: "https:/xiaozhuanlan.com",
     desc: "支持嵌入站内各种专栏等",
     demoEmbedLink: "https://xiaozhuanlan.com/example",
-    type: "教程类",
+    type: "教程类"
   },
 
   // 其他
   {
-    domain: 'amap',
+    domain: "amap",
     icon: GaodeIcon,
     title: "高德地图",
     link: "https://www.amap.com/",
     desc: "支持嵌入地图链接",
-    demoEmbedLink: "https://www.amap.com/search?query=%E6%88%90%E9%83%BD%E5%B8%82&city=510107&geoobj=103.901112%7C30.54791%7C104.340222%7C30.776785&zoom=12",
+    demoEmbedLink:
+      "https://www.amap.com/search?query=%E6%88%90%E9%83%BD%E5%B8%82&city=510107&geoobj=103.901112%7C30.54791%7C104.340222%7C30.776785&zoom=12",
     type: "其他",
     showInBrief: true
   },
   {
-    domain: 'gfycat',
+    domain: "gfycat",
     icon: GfycatIcon,
     title: "gfycat（gif图）",
     link: "https://gfycat.com/",
     desc: "支持嵌入各种 gif 图等",
-    demoEmbedLink: "https://gfycat.com/amusedalertkodiakbear-tuesday-drake-ilovemakonnen-degrassi",
+    demoEmbedLink:
+      "https://gfycat.com/amusedalertkodiakbear-tuesday-drake-ilovemakonnen-degrassi",
     type: "其他",
     showInBrief: true
   },
   {
-    domain: 'wikipedia',
+    domain: "wikipedia",
     icon: WikipediaIcon,
     title: "wikipedia",
     link: "https://wikipedia.org/",
     desc: "支持嵌入各种 wiki 内容",
     demoEmbedLink: "https://zh.wikipedia.org/wiki/Linux",
-    type: "其他",
+    type: "其他"
     // showInBrief: true
-  },
+  }
 
   // 应该还有 教程类 等等
-]
+];
