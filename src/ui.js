@@ -1,4 +1,5 @@
 import { debounce } from "debounce";
+import { make } from "@groupher/editor-utils";
 
 import tippy, { hideAll } from "tippy.js";
 import "tippy.js/dist/tippy.css";
@@ -11,7 +12,7 @@ import { parseDomain, loadJS, getQueryFromUrl } from "./utils";
 import {
   customIframeFragment,
   CUSTOM_PROVIDERS,
-  PROVIDER_ANCHORS
+  PROVIDER_ANCHORS,
 } from "./custom_embeds";
 
 const tooltipHideAll = hideAll;
@@ -72,7 +73,7 @@ export default class Ui {
       providerCardIntroLink: "provider-wrapper-header__intro__link",
       providerCardDesc: "provider-wrapper__desc",
       providerCardFooter: "provider-wrapper__footer",
-      providerCardFooterBtn: "provider-wrapper__footer_btn"
+      providerCardFooterBtn: "provider-wrapper__footer_btn",
     };
   }
 
@@ -84,7 +85,7 @@ export default class Ui {
     const { value: curUrl } = this.addrInput;
 
     const domain = parseDomain(curUrl);
-    const embedHTML = this._make("div", "");
+    const embedHTML = make("div", "");
 
     this.element.innerHTML = null;
     this.element.classList.add(this.CSS.container);
@@ -116,9 +117,9 @@ export default class Ui {
    *
    */
   embedDefaultContent(url) {
-    const embedHTML = this._make("a", "embedly-card", {
+    const embedHTML = make("a", "embedly-card", {
       href: encodeURI(url),
-      "data-card-controls": 0
+      "data-card-controls": 0,
     });
 
     // embedHTML.dataset["card-controls"] = 0
@@ -127,7 +128,7 @@ export default class Ui {
 
     this.adder.style.display = "none";
     this.containerLoading.style.display = "block";
-    embedly("on", "card.rendered", iframe => {
+    embedly("on", "card.rendered", (iframe) => {
       // iframe is the card iframe that we used to render the event.
       setTimeout(() => {
         console.log("loading done: ", iframe.contentWindow);
@@ -161,8 +162,8 @@ export default class Ui {
 
     switch (type) {
       case "success": {
-        const clipIconEl = this._make("div", [this.CSS.clip], {
-          innerHTML: ClipIcon
+        const clipIconEl = make("div", [this.CSS.clip], {
+          innerHTML: ClipIcon,
         });
 
         this.element.appendChild(clipIconEl);
@@ -283,24 +284,20 @@ export default class Ui {
    * @return {HTMLElement}
    */
   makeProviderIconList() {
-    const addrIconWrapper = this._make("div", this.CSS.addrIconWrapper);
-    const providers = R.filter(provider => provider.showInBrief, PROVIDERS);
+    const addrIconWrapper = make("div", this.CSS.addrIconWrapper);
+    const providers = R.filter((provider) => provider.showInBrief, PROVIDERS);
 
-    providers.forEach(provider => {
-      const Icon = this._make(
-        "img",
-        [this.CSS.addrIcon, "icon-" + provider.domain],
-        {
-          src: provider.icon
-        }
-      );
+    providers.forEach((provider) => {
+      const Icon = make("img", [this.CSS.addrIcon, "icon-" + provider.domain], {
+        src: provider.icon,
+      });
 
       tippy(Icon, this.providerPopoverCard(provider));
       addrIconWrapper.appendChild(Icon);
 
       // add divider if need
       if (R.contains(provider.domain, PROVIDER_ANCHORS)) {
-        const Divider = this._make("div", this.CSS.addrIconDivider);
+        const Divider = make("div", this.CSS.addrIconDivider);
         Divider.innerText = "/";
         addrIconWrapper.appendChild(Divider);
       }
@@ -315,28 +312,28 @@ export default class Ui {
    * @return {HTMLElement}
    */
   makeProviderIconListDetails() {
-    const typeList = R.keys(R.groupBy(provide => provide.type, PROVIDERS));
-    const ListWrapper = this._make("div", this.CSS.addrDetailWrapper);
+    const typeList = R.keys(R.groupBy((provide) => provide.type, PROVIDERS));
+    const ListWrapper = make("div", this.CSS.addrDetailWrapper);
 
     // TODO:  add issue
-    const FooterLink = this._make("a", this.CSS.addrFooterLink, {
+    const FooterLink = make("a", this.CSS.addrFooterLink, {
       href: "https://github.com/",
-      target: "_blank"
+      target: "_blank",
     });
     FooterLink.innerHTML = "侵权&nbsp;|&nbsp;建议&nbsp;|&nbsp;纠错";
 
-    typeList.forEach(type => {
-      const Title = this._make("div", this.CSS.addrTypeTitle, {});
+    typeList.forEach((type) => {
+      const Title = make("div", this.CSS.addrTypeTitle, {});
       Title.innerText = type + ":";
       const curProviders = R.filter(R.propEq("type", type))(PROVIDERS);
 
-      const AddrIconWrapper = this._make("div", this.CSS.addrDetailIconWrapper);
-      curProviders.forEach(provider => {
-        const Icon = this._make(
+      const AddrIconWrapper = make("div", this.CSS.addrDetailIconWrapper);
+      curProviders.forEach((provider) => {
+        const Icon = make(
           "img",
           [this.CSS.addrDetailIcon, "icon-" + provider.domain],
           {
-            src: provider.icon
+            src: provider.icon,
           }
         );
 
@@ -359,18 +356,18 @@ export default class Ui {
    * @return {object}
    */
   providerPopoverCard(provider) {
-    const Wrapper = this._make("div", this.CSS.providerCard);
-    const Header = this._make("div", this.CSS.providerCardHeader);
-    const Cover = this._make("img", this.CSS.providerCardCover, {
-      src: provider.icon
+    const Wrapper = make("div", this.CSS.providerCard);
+    const Header = make("div", this.CSS.providerCardHeader);
+    const Cover = make("img", this.CSS.providerCardCover, {
+      src: provider.icon,
     });
-    const Intro = this._make("div", this.CSS.providerCardIntro);
-    const Title = this._make("div", this.CSS.providerCardIntroTitle);
-    const Link = this._make("a", this.CSS.providerCardIntroLink);
+    const Intro = make("div", this.CSS.providerCardIntro);
+    const Title = make("div", this.CSS.providerCardIntroTitle);
+    const Link = make("a", this.CSS.providerCardIntroLink);
 
-    const Desc = this._make("div", this.CSS.providerCardDesc);
-    const Footer = this._make("div", this.CSS.providerCardFooter);
-    const InsertBtn = this._make("div", this.CSS.providerCardFooterBtn);
+    const Desc = make("div", this.CSS.providerCardDesc);
+    const Footer = make("div", this.CSS.providerCardFooter);
+    const InsertBtn = make("div", this.CSS.providerCardFooterBtn);
 
     Title.innerText = provider.title;
     Link.innerText = provider.link;
@@ -410,7 +407,7 @@ export default class Ui {
       // trigger: "click",
       placement: "bottom",
       // allowing you to hover over and click inside them.
-      interactive: true
+      interactive: true,
     };
   }
 
@@ -446,22 +443,22 @@ export default class Ui {
    * @return {HTMLElement}
    */
   renderAdderView() {
-    const container = this._make("div", this.CSS.container);
-    this.adder = this._make("div", this.CSS.addrWrapper);
-    const addrInputWrapper = this._make("div", this.CSS.addrInputWrapper);
-    this.addrInput = this._make("input", this.CSS.addrInput);
-    this.addrInputBtn = this._make("button", this.CSS.addrInputBtn);
+    const container = make("div", this.CSS.container);
+    this.adder = make("div", this.CSS.addrWrapper);
+    const addrInputWrapper = make("div", this.CSS.addrInputWrapper);
+    this.addrInput = make("input", this.CSS.addrInput);
+    this.addrInputBtn = make("button", this.CSS.addrInputBtn);
     this.addrInputBtn.addEventListener(
       "click",
       debounce(this.addrInputConfirmHandler.bind(this), 300)
     );
-    this.containerLoading = this._make("div", this.CSS.containerLoading);
+    this.containerLoading = make("div", this.CSS.containerLoading);
 
-    this.addrDescWrapper = this._make("div", this.CSS.addrDescWrapper);
-    const addrDescHeader = this._make("div", this.CSS.addrDescHeader);
-    const addrDesc = this._make("div", this.CSS.addrDesc);
+    this.addrDescWrapper = make("div", this.CSS.addrDescWrapper);
+    const addrDescHeader = make("div", this.CSS.addrDescHeader);
+    const addrDesc = make("div", this.CSS.addrDesc);
 
-    this.addrProviderToggler = this._make("div", this.CSS.addrProviderToggler);
+    this.addrProviderToggler = make("div", this.CSS.addrProviderToggler);
     this.addrProviderList = this.makeProviderIconList();
 
     this.addrInput.placeholder = "请输入网页地址";
@@ -510,28 +507,5 @@ export default class Ui {
     // this.element = this.renderAdderView()
     this.addrInput.value = provider || this.data.provider;
     this.addrInputHandler();
-  }
-
-  /**
-   * Helper method for elements creation
-   * @param tagName
-   * @param classNames
-   * @param attributes
-   * @return {HTMLElement}
-   */
-  _make(tagName, classNames = null, attributes = {}) {
-    const el = document.createElement(tagName);
-
-    if (Array.isArray(classNames)) {
-      el.classList.add(...classNames);
-    } else if (classNames) {
-      el.classList.add(classNames);
-    }
-
-    for (const attrName in attributes) {
-      el[attrName] = attributes[attrName];
-    }
-
-    return el;
   }
 }

@@ -1,6 +1,6 @@
 import { debounce } from "debounce";
+import { make, loadJS } from "@groupher/editor-utils";
 
-import { loadJS } from "./utils";
 import "./index.css";
 
 import Ui from "./ui";
@@ -169,7 +169,7 @@ export default class Embed {
    * @return {HTMLElement}
    */
   render() {
-    const wrapper = this._make("div", [this.CSS.wrapper]);
+    const wrapper = make("div", [this.CSS.wrapper]);
 
     wrapper.appendChild(this.ui.renderAdderView());
 
@@ -184,10 +184,10 @@ export default class Embed {
    */
   renderSettings() {
     const { provider } = this._data;
-    if (R.isEmpty(provider)) return this._make("DIV", "");
+    if (R.isEmpty(provider)) return make("DIV", "");
 
-    const Wrapper = this._make("DIV", [this.CSS.customSettingWrapper]);
-    const editIcon = this._make("DIV", [this.CSS.cdxSettingsButton], {
+    const Wrapper = make("DIV", [this.CSS.customSettingWrapper]);
+    const editIcon = make("DIV", [this.CSS.cdxSettingsButton], {
       title: "重新编辑",
     });
     editIcon.innerHTML = EditIcon;
@@ -197,7 +197,7 @@ export default class Embed {
       this.api.toolbar.close();
     });
 
-    const gotoIcon = this._make("a", [this.CSS.cdxSettingsButton], {
+    const gotoIcon = make("a", [this.CSS.cdxSettingsButton], {
       title: "跳转到原站点",
       target: "_blank",
       href: provider,
@@ -208,28 +208,5 @@ export default class Embed {
     Wrapper.appendChild(gotoIcon);
 
     return Wrapper;
-  }
-
-  /**
-   * Helper method for elements creation
-   * @param tagName
-   * @param classNames
-   * @param attributes
-   * @return {HTMLElement}
-   */
-  _make(tagName, classNames = null, attributes = {}) {
-    const el = document.createElement(tagName);
-
-    if (Array.isArray(classNames)) {
-      el.classList.add(...classNames);
-    } else if (classNames) {
-      el.classList.add(classNames);
-    }
-
-    for (const attrName in attributes) {
-      el[attrName] = attributes[attrName];
-    }
-
-    return el;
   }
 }
