@@ -1,15 +1,16 @@
-import { debounce } from 'debounce';
+import { debounce } from "debounce";
 
-import { loadJS } from './utils'
-import './index.css';
+import { loadJS } from "./utils";
+import "./index.css";
 
-import Ui from './ui'
-import EmbedIcon from './icon/embed.svg';
-import EditIcon from './icon/edit.svg'
-import GotoIcon from './icon/goto.svg'
+import Ui from "./ui";
+import EmbedIcon from "./icon/embed.svg";
+import EditIcon from "./icon/edit.svg";
+import GotoIcon from "./icon/goto.svg";
 
-const embedlyScript = 'https://cdn.embedly.com/widgets/platform.js'
-const ramdaScript = 'https://cdn.jsdelivr.net/npm/ramda@0.25.0/dist/ramda.min.js'
+const embedlyScript = "https://cdn.embedly.com/widgets/platform.js";
+const ramdaScript =
+  "https://cdn.jsdelivr.net/npm/ramda@0.25.0/dist/ramda.min.js";
 
 /**
  * @typedef {Object} EmbedData
@@ -48,24 +49,24 @@ export default class Embed {
     this.api = api;
 
     this._data = {
-      type: data.type || 'embedly',
-      provider: data.provider || '',
-      value: data.value || '',
+      type: data.type || "embedly",
+      provider: data.provider || "",
+      value: data.value || "",
     };
 
     this.element = null;
-    this.config = {}
+    this.config = {};
 
     // this.data = data;
-    this.addrInput = null
+    this.addrInput = null;
 
-    this.addrDescWrapper = null
-    this.showProvidersDetail = false
-    this.addrProviderList = null
-    this.addrProviderToggler = null
+    this.addrDescWrapper = null;
+    this.showProvidersDetail = false;
+    this.addrProviderList = null;
+    this.addrProviderToggler = null;
 
     loadJS(embedlyScript, this.embedlyOnload, document.body);
-    loadJS(ramdaScript, null, document.body)
+    loadJS(ramdaScript, null, document.body);
 
     /**
      * Module for working with UI
@@ -74,32 +75,32 @@ export default class Embed {
       api,
       config: this.config,
       setData: this.setData.bind(this),
-      data: this._data
+      data: this._data,
     });
   }
-  
+
   /**
    * set saved data by type
    */
-  setData(type = 'embedly', value) {
+  setData(type = "embedly", value) {
     // embedly or iframe
     this._data = {
       type,
-      provider: encodeURI(value) || '',
-      value: encodeURI(value) || '',
+      provider: encodeURI(value) || "",
+      value: encodeURI(value) || "",
     };
   }
 
   /**
    * embedly service
    * should set api key in here
-   * 
+   *
    */
   embedlyOnload() {
     embedly("defaults", {
       cards: {
         key: window.localStorage.getItem("embedlykey"),
-      }
+      },
     });
   }
 
@@ -109,9 +110,9 @@ export default class Embed {
    */
   get CSS() {
     return {
-      wrapper: 'embed-tool-wrapper',
-      customSettingWrapper: 'custom-setting-wrapper',
-      cdxSettingsButton: 'cdx-settings-button'
+      wrapper: "embed-tool-wrapper",
+      customSettingWrapper: "custom-setting-wrapper",
+      cdxSettingsButton: "cdx-settings-button",
     };
   }
 
@@ -130,14 +131,14 @@ export default class Embed {
    */
   static get pasteConfig() {
     return {
-      patterns: Embed.patterns
+      patterns: Embed.patterns,
     };
   }
 
   static get toolbox() {
     return {
       icon: EmbedIcon,
-      title: '嵌入'
+      title: "嵌入第三方内容",
     };
   }
 
@@ -168,11 +169,11 @@ export default class Embed {
    * @return {HTMLElement}
    */
   render() {
-    const wrapper = this._make('div', [this.CSS.wrapper])
+    const wrapper = this._make("div", [this.CSS.wrapper]);
 
-    wrapper.appendChild(this.ui.renderAdderView())
+    wrapper.appendChild(this.ui.renderAdderView());
 
-    return wrapper
+    return wrapper;
   }
 
   /**
@@ -182,31 +183,31 @@ export default class Embed {
    * @return {Element}
    */
   renderSettings() {
-    const { provider } = this._data
-    if (R.isEmpty(provider)) return this._make('DIV', '')
+    const { provider } = this._data;
+    if (R.isEmpty(provider)) return this._make("DIV", "");
 
-    const Wrapper = this._make('DIV', [this.CSS.customSettingWrapper])
-    const editIcon = this._make('DIV', [this.CSS.cdxSettingsButton], {
-      title: '重新编辑',
-    })
-    editIcon.innerHTML = EditIcon
+    const Wrapper = this._make("DIV", [this.CSS.customSettingWrapper]);
+    const editIcon = this._make("DIV", [this.CSS.cdxSettingsButton], {
+      title: "重新编辑",
+    });
+    editIcon.innerHTML = EditIcon;
 
     editIcon.addEventListener("click", () => {
-      this.ui.changeToAdderView(provider)
-      this.api.toolbar.close()
-    })
+      this.ui.changeToAdderView(provider);
+      this.api.toolbar.close();
+    });
 
-    const gotoIcon = this._make('a', [this.CSS.cdxSettingsButton], {
-      title: '跳转到原站点',
-      target: '_blank',
+    const gotoIcon = this._make("a", [this.CSS.cdxSettingsButton], {
+      title: "跳转到原站点",
+      target: "_blank",
       href: provider,
-    })
-    gotoIcon.innerHTML = GotoIcon
+    });
+    gotoIcon.innerHTML = GotoIcon;
 
-    Wrapper.appendChild(editIcon)
-    Wrapper.appendChild(gotoIcon)
+    Wrapper.appendChild(editIcon);
+    Wrapper.appendChild(gotoIcon);
 
-    return Wrapper
+    return Wrapper;
   }
 
   /**
