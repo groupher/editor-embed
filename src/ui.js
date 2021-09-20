@@ -210,7 +210,7 @@ export default class Ui {
    *
    */
   showConfirmBtn() {
-    this.addrInput.style.width = "calc(100% - 75px)";
+    this.addrInput.style.width = "calc(100% - 58px)";
 
     setTimeout(() => {
       this.addrInputBtn.style.display = "inline-block";
@@ -404,7 +404,7 @@ export default class Ui {
     return {
       content,
       theme: "light",
-      delay: 200,
+      delay: 300,
       // trigger: "click",
       placement: "bottom",
       // allowing you to hover over and click inside them.

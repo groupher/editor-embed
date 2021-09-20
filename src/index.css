@@ -107,8 +107,8 @@
         transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
         user-select: none;
         touch-action: manipulation;
-        height: 28px;
-        padding: 0 15px;
+        height: 26px;
+        padding: 0 6px;
         padding-top: 2px;
         font-size: 14px;
         font-weight: bold;
@@ -308,4 +308,8 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.embed-tool-wrapper:focus-within .cdx-ctrlbreak-hint {
+  opacity: 1;
 }

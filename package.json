@@ -1,6 +1,6 @@
 {
   "name": "@groupher/editor-embed",
-  "version": "1.0.16",
+  "version": "1.0.18",
   "keywords": [
     "codex editor",
     "embed",
@@ -42,7 +42,7 @@
     "webpack-cli": "^3.2.3"
   },
   "dependencies": {
-    "@groupher/editor-utils": "^0.1.71",
+    "@groupher/editor-utils": "^0.2.54",
     "ramda": "^0.27.1",
     "svg-inline-loader": "^0.8.0",
     "tippy.js": "^5.0.1"

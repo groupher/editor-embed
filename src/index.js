@@ -1,5 +1,10 @@
 import { debounce } from "debounce";
-import { make, loadJS } from "@groupher/editor-utils";
+import {
+  make,
+  loadJS,
+  enableCtrlEnterBreak,
+  addBreakHint,
+} from "@groupher/editor-utils";
 import { isEmpty } from "ramda";
 
 import "./index.css";
@@ -136,7 +141,7 @@ export default class Embed {
   static get toolbox() {
     return {
       icon: EmbedIcon,
-      title: "嵌入第三方内容",
+      title: "嵌入内容",
     };
   }
 
@@ -170,6 +175,9 @@ export default class Embed {
     const wrapper = make("div", [this.CSS.wrapper]);
 
     wrapper.appendChild(this.ui.renderAdderView());
+
+    enableCtrlEnterBreak(wrapper, this.api);
+    addBreakHint(wrapper, { right: "12px", bottom: "5px" });
 
     return wrapper;
   }
