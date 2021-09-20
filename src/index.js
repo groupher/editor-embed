@@ -1,5 +1,6 @@
 import { debounce } from "debounce";
 import { make, loadJS } from "@groupher/editor-utils";
+import { isEmpty } from "ramda";
 
 import "./index.css";
 
@@ -9,8 +10,6 @@ import EditIcon from "./icon/edit.svg";
 import GotoIcon from "./icon/goto.svg";
 
 const embedlyScript = "https://cdn.embedly.com/widgets/platform.js";
-const ramdaScript =
-  "https://cdn.jsdelivr.net/npm/ramda@0.25.0/dist/ramda.min.js";
 
 /**
  * @typedef {Object} EmbedData
@@ -66,7 +65,6 @@ export default class Embed {
     this.addrProviderToggler = null;
 
     loadJS(embedlyScript, this.embedlyOnload, document.body);
-    loadJS(ramdaScript, null, document.body);
 
     /**
      * Module for working with UI
@@ -184,7 +182,7 @@ export default class Embed {
    */
   renderSettings() {
     const { provider } = this._data;
-    if (R.isEmpty(provider)) return make("DIV", "");
+    if (isEmpty(provider)) return make("DIV", "");
 
     const Wrapper = make("DIV", [this.CSS.customSettingWrapper]);
     const editIcon = make("DIV", [this.CSS.cdxSettingsButton], {

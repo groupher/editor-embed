@@ -1,5 +1,6 @@
 import { debounce } from "debounce";
 import { make } from "@groupher/editor-utils";
+import { keys, isEmpty, pluck, contains, groupBy, filter, propEq } from "ramda";
 
 import tippy, { hideAll } from "tippy.js";
 import "tippy.js/dist/tippy.css";
@@ -91,7 +92,7 @@ export default class Ui {
     this.element.classList.add(this.CSS.container);
     this.element.appendChild(this.containerLoading);
 
-    if (R.contains(domain, CUSTOM_PROVIDERS)) {
+    if (contains(domain, CUSTOM_PROVIDERS)) {
       const { valid, html, fid } = customIframeFragment(curUrl);
       if (!valid) return console.log("TODO:  red alert UI");
       embedHTML.innerHTML = html;
@@ -187,7 +188,7 @@ export default class Ui {
   addrInputHandler() {
     const { value } = this.addrInput;
     // Object.keys(PROVIDERS)
-    const providerKeys = R.pluck("domain", PROVIDERS);
+    const providerKeys = pluck("domain", PROVIDERS);
     const domain = parseDomain(value);
 
     if (value.trim() === "") {
@@ -230,9 +231,9 @@ export default class Ui {
   // highlight the current provider icon for current domain
   highlightCurrentProviderIcon() {
     const { value } = this.addrInput;
-    if (R.isEmpty(value.trim())) return false;
+    if (isEmpty(value.trim())) return false;
 
-    const providerKeys = R.pluck("domain", PROVIDERS);
+    const providerKeys = pluck("domain", PROVIDERS);
     const domain = parseDomain(value);
 
     // highlight the current provider icon for current domain
@@ -267,7 +268,7 @@ export default class Ui {
    * @param providerKeys, array of string
    */
   lightenAllProviderIcons() {
-    const providerKeys = R.pluck("domain", PROVIDERS);
+    const providerKeys = pluck("domain", PROVIDERS);
 
     for (let i = 0; i < providerKeys.length; i++) {
       const curKey = providerKeys[i];
@@ -285,7 +286,7 @@ export default class Ui {
    */
   makeProviderIconList() {
     const addrIconWrapper = make("div", this.CSS.addrIconWrapper);
-    const providers = R.filter((provider) => provider.showInBrief, PROVIDERS);
+    const providers = filter((provider) => provider.showInBrief, PROVIDERS);
 
     providers.forEach((provider) => {
       const Icon = make("img", [this.CSS.addrIcon, "icon-" + provider.domain], {
@@ -296,7 +297,7 @@ export default class Ui {
       addrIconWrapper.appendChild(Icon);
 
       // add divider if need
-      if (R.contains(provider.domain, PROVIDER_ANCHORS)) {
+      if (contains(provider.domain, PROVIDER_ANCHORS)) {
         const Divider = make("div", this.CSS.addrIconDivider);
         Divider.innerText = "/";
         addrIconWrapper.appendChild(Divider);
@@ -312,7 +313,7 @@ export default class Ui {
    * @return {HTMLElement}
    */
   makeProviderIconListDetails() {
-    const typeList = R.keys(R.groupBy((provide) => provide.type, PROVIDERS));
+    const typeList = keys(groupBy((provide) => provide.type, PROVIDERS));
     const ListWrapper = make("div", this.CSS.addrDetailWrapper);
 
     // TODO:  add issue
@@ -325,7 +326,7 @@ export default class Ui {
     typeList.forEach((type) => {
       const Title = make("div", this.CSS.addrTypeTitle, {});
       Title.innerText = type + ":";
-      const curProviders = R.filter(R.propEq("type", type))(PROVIDERS);
+      const curProviders = filter(propEq("type", type))(PROVIDERS);
 
       const AddrIconWrapper = make("div", this.CSS.addrDetailIconWrapper);
       curProviders.forEach((provider) => {
