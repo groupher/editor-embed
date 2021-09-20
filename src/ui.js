@@ -373,7 +373,7 @@ export default class Ui {
     Link.innerText = provider.link;
 
     Desc.innerText = provider.desc;
-    InsertBtn.innerText = "插入示例";
+    InsertBtn.innerText = "嵌入示例";
 
     InsertBtn.addEventListener("click", () => {
       if (this.isEmbeding()) return false;
@@ -446,7 +446,9 @@ export default class Ui {
     const container = make("div", this.CSS.container);
     this.adder = make("div", this.CSS.addrWrapper);
     const addrInputWrapper = make("div", this.CSS.addrInputWrapper);
-    this.addrInput = make("input", this.CSS.addrInput);
+    this.addrInput = make("input", this.CSS.addrInput, {
+      "data-skip-plus-button": true,
+    });
     this.addrInputBtn = make("button", this.CSS.addrInputBtn);
     this.addrInputBtn.addEventListener(
       "click",
@@ -467,7 +469,7 @@ export default class Ui {
       debounce(this.addrInputHandler.bind(this), 300)
     );
 
-    this.addrInputBtn.innerText = "确定";
+    this.addrInputBtn.innerText = "嵌入";
 
     addrInputWrapper.appendChild(this.addrInput);
     addrInputWrapper.appendChild(this.addrInputBtn);

@@ -48,7 +48,7 @@
     border-radius: 5px;
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       z-index: 3;
       left: 50%;
@@ -65,7 +65,6 @@
     }
   }
 
-
   &__addrwrapper {
     &-inputwrapper {
       padding: 10px;
@@ -79,20 +78,19 @@
         padding: 5px;
         font-variant: tabular-nums;
         list-style: none;
-        font-feature-settings: 'tnum';
+        font-feature-settings: "tnum";
         position: relative;
         display: inline-block;
         width: 100%;
         height: 35px;
-        color: rgba(0,0,0,0.65);
+        color: rgba(0, 0, 0, 0.65);
         font-size: 14px;
         line-height: 1.2;
         background-color: #f1f3f7;
         background-image: none;
         border: 1px solid #eaeaea;
         border-radius: 4px;
-        -webkit-transition: all .3s;
-        transition: all .3s;
+        transition: all 0.3s;
       }
       &-btn {
         display: none;
@@ -105,22 +103,17 @@
         text-align: center;
         background-image: none;
         border: 1px solid transparent;
-        -webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.015);
-        box-shadow: 0 2px 0 rgba(0,0,0,0.015);
         cursor: pointer;
-        -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
-        transition: all .3s cubic-bezier(.645, .045, .355, 1);
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
+        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
         user-select: none;
-        -ms-touch-action: manipulation;
         touch-action: manipulation;
-        height: 32px;
+        height: 28px;
         padding: 0 15px;
+        padding-top: 2px;
         font-size: 14px;
+        font-weight: bold;
         border-radius: 4px;
-        background-color: #33AAF8;
+        background-color: #33aaf8;
         color: white;
       }
     }
@@ -152,7 +145,7 @@
           font-weight: bold;
         }
 
-        transition: all .3s;
+        transition: all 0.3s;
       }
 
       &-iconwrapper {
@@ -160,7 +153,7 @@
         align-items: center;
         margin-top: 5px;
         width: 100%;
-        
+
         &-icon {
           margin-right: 6px;
           width: 19px;
@@ -172,7 +165,7 @@
             cursor: pointer;
           }
 
-          transition: all .3s;
+          transition: all 0.3s;
         }
 
         &-divider {
@@ -197,7 +190,7 @@
         display: flex;
         align-items: center;
         margin-top: 10px;
-        
+
         &-icon {
           margin-right: 10px;
           width: 20px;
@@ -209,7 +202,7 @@
             cursor: pointer;
           }
 
-          transition: all .3s;
+          transition: all 0.3s;
         }
 
         &-divider {
@@ -293,7 +286,7 @@
     text-align: center;
 
     &_btn {
-      color: #0087E7;
+      color: #0087e7;
       cursor: pointer;
     }
   }
